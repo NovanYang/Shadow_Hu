@@ -6,6 +6,7 @@ public class PlayerInteraction : MonoBehaviour
     // Public Attribute
     public GameObject holdingObject = null;
     public GameObject interactableObject = null;
+    public KeyCode interactKey = KeyCode.E;
 
     // List of colliding objects
     private List<GameObject> overlappingObjects = new List<GameObject>();
@@ -38,7 +39,25 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Update()
     {
-        #region Assign the nearest Interactable Object
+        UpdateInteractableObject();
+
+        if (Input.GetKeyDown(interactKey))
+        {
+            if (interactableObject != null && holdingObject == null)
+            {
+                HandleInteraction(interactableObject);
+            }
+            else if (holdingObject != null)
+            {
+                Debug.Log("!!!");
+                HandleInteraction(holdingObject);
+            }
+        }
+    }
+
+    // Assign the nearest Interactable Object
+    private void UpdateInteractableObject()
+    {
         if (overlappingObjects.Count > 0)
         {
             GameObject nearest = null;
@@ -60,9 +79,32 @@ public class PlayerInteraction : MonoBehaviour
         {
             interactableObject = null;
         }
-
-        #endregion
     }
 
+    private void HandleInteraction(GameObject target)
+    {
+        switch (target.tag)
+        {
+            case "Candle":
+
+                if (holdingObject == null)
+                {
+                    holdingObject = target; ;
+                }
+                else if (holdingObject == target)
+                {
+                    holdingObject = null;
+                }
+
+                target = target.transform.parent.gameObject;
+                var _candle = target.GetComponent<Candle>();
+                if (_candle != null)
+                {
+                    _candle.PickOrDrop(transform);
+                }
+                break;
+        }
+    }
 
 }
+

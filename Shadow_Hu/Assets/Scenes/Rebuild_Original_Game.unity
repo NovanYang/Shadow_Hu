@@ -539,6 +539,7 @@ GameObject:
   - component: {fileID: 1411495492}
   - component: {fileID: 1411495494}
   - component: {fileID: 1411495495}
+  - component: {fileID: 1411495496}
   m_Layer: 6
   m_Name: Candle
   m_TagString: Untagged
@@ -589,7 +590,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -690,6 +691,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1411495496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411495491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b107d64fac1845b46b912bb423aa8af6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isHeld: 0
 --- !u!1 &1527669449
 GameObject:
   m_ObjectHideFlags: 0
@@ -933,11 +947,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5037544e1ea66ab449a9a35f46e094a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  holdingObject: {fileID: 0}
+  interactableObject: {fileID: 0}
+  interactKey: 101
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 466288963}
+  - {fileID: 1411495493}
   - {fileID: 1527669451}
   - {fileID: 1203370550}
-  - {fileID: 1411495493}
