@@ -3,10 +3,11 @@ using System.Collections.Generic;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    // Public Attribute
+    //Attribute
     public GameObject holdingObject = null;
     public GameObject interactableObject = null;
-    public KeyCode interactKey = KeyCode.E;
+    private KeyCode interactKey = KeyCode.E;
+    private KeyCode lightUpKey = KeyCode.Q;
 
     // List of colliding objects
     private List<GameObject> overlappingObjects = new List<GameObject>();
@@ -41,18 +42,10 @@ public class PlayerInteraction : MonoBehaviour
     {
         UpdateInteractableObject();
 
-        if (Input.GetKeyDown(interactKey))
-        {
-            if (interactableObject != null && holdingObject == null)
-            {
-                HandleInteraction(interactableObject);
-            }
-            else if (holdingObject != null)
-            {
-                Debug.Log("!!!");
-                HandleInteraction(holdingObject);
-            }
-        }
+        ReceiveInteraction();
+
+        ReceiveCandleSwitch();
+
     }
 
     // Assign the nearest Interactable Object
@@ -81,6 +74,7 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
+    // Handle Interaction with object, if holding something, drop
     private void HandleInteraction(GameObject target)
     {
         switch (target.tag)
@@ -103,6 +97,43 @@ public class PlayerInteraction : MonoBehaviour
                     _candle.PickOrDrop(transform);
                 }
                 break;
+        }
+    }
+
+    // Check for key input for interaction
+    private void ReceiveInteraction()
+    {
+        if (Input.GetKeyDown(interactKey))
+        {
+            if (interactableObject != null && holdingObject == null)
+            {
+                HandleInteraction(interactableObject);
+            }
+            else if (holdingObject != null)
+            {
+                HandleInteraction(holdingObject);
+            }
+        }
+    }
+
+    // Check for key input for turning the candle
+    private void ReceiveCandleSwitch()
+    {
+        if (Input.GetKeyDown(lightUpKey))
+        {
+            if (interactableObject != null && holdingObject == null)
+            {
+                if (interactableObject.tag == "Candle")
+                {
+                    var _candle = interactableObject.transform.parent;
+                    _candle.GetComponent<Candle>().LitCandle();
+                }
+            }
+            else if (holdingObject != null)
+            {
+                var _candle = holdingObject.transform.parent;
+                _candle.GetComponent<Candle>().LitCandle();
+            }
         }
     }
 
