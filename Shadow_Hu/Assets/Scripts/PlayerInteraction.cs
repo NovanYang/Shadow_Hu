@@ -6,6 +6,7 @@ public class PlayerInteraction : MonoBehaviour
     //Attribute
     public GameObject holdingObject = null;
     public GameObject interactableObject = null;
+    public Transform bottomAnchor;
     private KeyCode interactKey = KeyCode.E;
     private KeyCode lightUpKey = KeyCode.Q;
 
@@ -46,6 +47,8 @@ public class PlayerInteraction : MonoBehaviour
 
         ReceiveCandleSwitch();
 
+        ReceiveCandleTune();
+
     }
 
     // Assign the nearest Interactable Object
@@ -53,20 +56,20 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (overlappingObjects.Count > 0)
         {
-            GameObject nearest = null;
-            float minDistance = float.MaxValue;
+            GameObject _nearest = null;
+            float _minDistance = float.MaxValue;
 
             foreach (GameObject collidedObject in overlappingObjects)
             {
                 float distance = Vector2.Distance(transform.position, collidedObject.transform.position);
-                if (distance < minDistance)
+                if (distance < _minDistance)
                 {
-                    minDistance = distance;
-                    nearest = collidedObject;
+                    _minDistance = distance;
+                    _nearest = collidedObject;
                 }
             }
 
-            interactableObject = nearest;
+            interactableObject = _nearest;
         }
         else
         {
@@ -137,5 +140,37 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
+    // Track Signal of tuning the candle and call candle's function
+    private void ReceiveCandleTune()
+    {
+        // check signals only when holding a candle
+        if (holdingObject != null && holdingObject.tag == "Candle")
+        {
+            var _candle = holdingObject.transform.parent.GetComponent<Candle>();
+            // check only if the candle is lit
+            if (_candle.isLit)
+            {
+                float _scroll = Input.GetAxis("Mouse ScrollWheel");
+
+                // return when mouse wheel is not activated
+                if (_scroll == 0)
+                {
+                    return;
+                }
+                else
+                {
+                    if (_scroll > 0f)
+                    {
+                        _candle.AdjustShadowScale(0.5f);
+
+                    }
+                    else
+                    {
+                        _candle.AdjustShadowScale(-0.5f);
+                    }
+                }
+            }
+        }
+    }
 }
 
