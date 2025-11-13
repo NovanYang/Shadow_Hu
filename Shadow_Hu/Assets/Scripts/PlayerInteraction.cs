@@ -47,6 +47,8 @@ public class PlayerInteraction : MonoBehaviour
 
         ReceiveCandleSwitch();
 
+        ReceiveCandleTune();
+
     }
 
     // Assign the nearest Interactable Object
@@ -138,5 +140,37 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
+    // Track Signal of tuning the candle and call candle's function
+    private void ReceiveCandleTune()
+    {
+        // check signals only when holding a candle
+        if (holdingObject != null && holdingObject.tag == "Candle")
+        {
+            var _candle = holdingObject.transform.parent.GetComponent<Candle>();
+            // check only if the candle is lit
+            if (_candle.isLit)
+            {
+                float _scroll = Input.GetAxis("Mouse ScrollWheel");
+
+                // return when mouse wheel is not activated
+                if (_scroll == 0)
+                {
+                    return;
+                }
+                else
+                {
+                    if (_scroll > 0f)
+                    {
+                        _candle.AdjustShadowScale(0.5f);
+
+                    }
+                    else
+                    {
+                        _candle.AdjustShadowScale(-0.5f);
+                    }
+                }
+            }
+        }
+    }
 }
 

@@ -76,6 +76,21 @@ public class Candle : MonoBehaviour
         }
     }
 
+    public void AdjustShadowScale(float scrollInput)
+    {
+        if (shadowInstance == null) return;
+
+        RecalculateOffset();
+
+        Vector3 currentScale = shadowInstance.transform.localScale;
+
+        float scaleSpeed = 0.5f;
+
+        float newScale = Mathf.Clamp(currentScale.x + scrollInput * scaleSpeed, 1f, 3f);
+
+        shadowInstance.transform.localScale = new Vector3(newScale, newScale, 1f);
+    }
+
     // Generate the corresponding shadow when candle lit and vice versa
     private void HandleShadowGeneration()
     {
@@ -112,7 +127,9 @@ public class Candle : MonoBehaviour
                 "shadowInstance == null || bottomAnchor == null");
             return;
         }
-       
+
+        //RecalculateOffset();
+
         // Get the bottom position of player and candle
         Vector3 _candleBottom = bottomAnchor.position;
         Vector3 _playerBottom = playerInteraction.bottomAnchor.position;
@@ -132,5 +149,16 @@ public class Candle : MonoBehaviour
 
         // Update
         shadowInstance.transform.position = _shadowPos;
+    }
+
+    // Get the new Offset according to WorldPosition
+    private void RecalculateOffset()
+    {
+        Transform shadowAnchor = shadowInstance.transform.Find("BottomAnchor");
+        if (shadowAnchor != null)
+        {
+            float bottomToOrigin = shadowAnchor.position.y - shadowInstance.transform.position.y;
+            shadowOffset = new Vector3(0, -bottomToOrigin, 0);
+        }
     }
 }
