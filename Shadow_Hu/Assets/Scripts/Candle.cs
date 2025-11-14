@@ -128,7 +128,7 @@ public class Candle : MonoBehaviour
             return;
         }
 
-        //RecalculateOffset();
+        RecalculateOffset();
 
         // Get the bottom position of player and candle
         Vector3 _candleBottom = bottomAnchor.position;
