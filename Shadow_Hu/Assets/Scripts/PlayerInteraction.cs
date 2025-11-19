@@ -153,6 +153,15 @@ public class PlayerInteraction : MonoBehaviour
                 float _scroll = Input.GetAxis("Mouse ScrollWheel");
 
                 // return when mouse wheel is not activated
+                if (Input.GetKeyDown(KeyCode.K)) 
+                {
+                    _candle.AdjustShadowScale(-0.5f);
+                }
+                if (Input.GetKeyDown(KeyCode.L))
+                {
+                    _candle.AdjustShadowScale(0.5f);
+                }
+
                 if (_scroll == 0)
                 {
                     return;

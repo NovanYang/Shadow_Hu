@@ -12,6 +12,8 @@ public class Candle : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     private PlayerInteraction playerInteraction;
+    private KeyCode liftKey = KeyCode.Space;
+    private bool lifting = false;
 
     // Shadow Settings
     public float maxShadowDistance = 20f;
@@ -39,10 +41,8 @@ public class Candle : MonoBehaviour
     private void Update()
     {
         HandleShadowGeneration();
-        if (shadowInstance != null)
-        {
-            HandleShadowPosition();
-        }
+        HandleShadowPosition();
+        ReceiveLiftInput();
     }
 
     // Set isHeld state for the candle, make the candle follow the player
@@ -122,6 +122,8 @@ public class Candle : MonoBehaviour
     // Update the shadow's Position 
     private void HandleShadowPosition()
     {
+        if (lifting) return;
+
         if (shadowInstance == null || bottomAnchor == null)
         {
             Debug.Log("ERROR: Missing Referenec: " +
@@ -163,4 +165,27 @@ public class Candle : MonoBehaviour
         }
     }
 
+    private void ReceiveLiftInput()
+    {
+        if (shadowInstance == null) return;
+
+        if (!isHeld)
+        {
+            return;
+        }
+
+        if (Input.GetKeyDown(liftKey))
+        {
+            Debug.Log("!!!");
+            lifting = true;
+            Rigidbody2D _playerRb = playerInteraction.gameObject.GetComponent<Rigidbody2D>();
+            
+            _playerRb.linearVelocityY = 0;
+            _playerRb.simulated = false;
+
+            playerInteraction.gameObject.transform.position = shadowInstance.transform.position;
+
+        }
+
+    }
 }
