@@ -76,6 +76,7 @@ public class Candle : MonoBehaviour
         }
     }
 
+    // Changing the scale of the shadow
     public void AdjustShadowScale(float scrollInput)
     {
         if (shadowInstance == null) return;
@@ -161,4 +162,5 @@ public class Candle : MonoBehaviour
             shadowOffset = new Vector3(0, -bottomToOrigin, 0);
         }
     }
+
 }
