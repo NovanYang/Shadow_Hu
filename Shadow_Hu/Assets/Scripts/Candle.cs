@@ -169,21 +169,35 @@ public class Candle : MonoBehaviour
     {
         if (shadowInstance == null) return;
 
-        if (!isHeld)
-        {
-            return;
-        }
-
         if (Input.GetKeyDown(liftKey))
         {
-            Debug.Log("!!!");
-            lifting = true;
             Rigidbody2D _playerRb = playerInteraction.gameObject.GetComponent<Rigidbody2D>();
-            
-            _playerRb.linearVelocityY = 0;
-            _playerRb.simulated = false;
 
-            playerInteraction.gameObject.transform.position = shadowInstance.transform.position;
+            if (!lifting)
+            {
+                if (!isHeld)
+                {
+                    return;
+                }
+
+                lifting = true;   
+
+                _playerRb.linearVelocityY = 0;
+                _playerRb.simulated = false;
+
+                Vector3 _offset = new Vector3(0, 0.5f, 0);
+                playerInteraction.gameObject.transform.position = shadowInstance.transform.position + _offset;
+
+                PickOrDrop(null);
+            }
+            else
+            { 
+                _playerRb.simulated = true;
+                PlayerMovement _playerMovement = playerInteraction.gameObject.GetComponent<PlayerMovement>();
+                _playerRb.linearVelocityY = _playerMovement.jumpForce;
+                lifting = false;
+            }
+            
 
         }
 
