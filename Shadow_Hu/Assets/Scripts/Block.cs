@@ -15,12 +15,14 @@ public class Block : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         blockCol = GetComponent<Collider2D>();
         GameObject _player = GameObject.FindWithTag("Player");
+
         if (_player != null)
         {
             playerCol = _player.GetComponent<Collider2D>();
         }
     }
 
+    // Correctly update the physic for the block when lift or dropped by shadow
     public void PickOrDrop(Transform Shadow)
     {
         if (Shadow == null)
@@ -43,6 +45,7 @@ public class Block : MonoBehaviour
         }
     }
 
+    // When the block is about to hit the player when falling, ignore collision
     private void OnTriggerEnter2D(Collider2D collision)
     {
 

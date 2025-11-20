@@ -165,6 +165,7 @@ public class Candle : MonoBehaviour
         }
     }
 
+    // Check for input when the shadow created by the candle can lift the player
     private void ReceiveLiftInput()
     {
         if (shadowInstance == null) return;
@@ -173,6 +174,7 @@ public class Candle : MonoBehaviour
         {
             Rigidbody2D _playerRb = playerInteraction.gameObject.GetComponent<Rigidbody2D>();
 
+            // When the shadow is not lifting player, lift player
             if (!lifting)
             {
                 if (!isHeld)
@@ -182,19 +184,26 @@ public class Candle : MonoBehaviour
 
                 lifting = true;   
 
+                // Stop physics
                 _playerRb.linearVelocityY = 0;
                 _playerRb.simulated = false;
 
+                // set player's position to the current shadow's position
                 Vector3 _offset = new Vector3(0, 0.5f, 0);
                 playerInteraction.gameObject.transform.position = shadowInstance.transform.position + _offset;
 
+                // The candle need to be dropped at this point
                 PickOrDrop(null);
             }
             else
             { 
+                // Reactivate physics
                 _playerRb.simulated = true;
+                // Manual setup a jump for player
                 PlayerMovement _playerMovement = playerInteraction.gameObject.GetComponent<PlayerMovement>();
                 _playerRb.linearVelocityY = _playerMovement.jumpForce;
+
+                // change the state
                 lifting = false;
             }
             

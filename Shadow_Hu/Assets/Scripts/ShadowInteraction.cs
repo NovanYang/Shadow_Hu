@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ShadowInteraction : MonoBehaviour
 {
+    // References
     public GameObject interactableObject = null;
     public GameObject holdingObject = null;
     private KeyCode interactKey = KeyCode.E;

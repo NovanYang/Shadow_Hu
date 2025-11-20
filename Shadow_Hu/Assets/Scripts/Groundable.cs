@@ -1,16 +1,7 @@
 using UnityEngine;
 
+// Attach this script to any object that player can step on and jump on
 public class Groundable : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
