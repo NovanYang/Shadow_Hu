@@ -12,6 +12,8 @@ public class Candle : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     private PlayerInteraction playerInteraction;
+    private KeyCode liftKey = KeyCode.Space;
+    private bool lifting = false;
 
     // Shadow Settings
     public float maxShadowDistance = 20f;
@@ -39,10 +41,8 @@ public class Candle : MonoBehaviour
     private void Update()
     {
         HandleShadowGeneration();
-        if (shadowInstance != null)
-        {
-            HandleShadowPosition();
-        }
+        HandleShadowPosition();
+        ReceiveLiftInput();
     }
 
     // Set isHeld state for the candle, make the candle follow the player
@@ -76,6 +76,7 @@ public class Candle : MonoBehaviour
         }
     }
 
+    // Changing the scale of the shadow
     public void AdjustShadowScale(float scrollInput)
     {
         if (shadowInstance == null) return;
@@ -121,6 +122,8 @@ public class Candle : MonoBehaviour
     // Update the shadow's Position 
     private void HandleShadowPosition()
     {
+        if (lifting) return;
+
         if (shadowInstance == null || bottomAnchor == null)
         {
             Debug.Log("ERROR: Missing Referenec: " +
@@ -160,5 +163,53 @@ public class Candle : MonoBehaviour
             float bottomToOrigin = shadowAnchor.position.y - shadowInstance.transform.position.y;
             shadowOffset = new Vector3(0, -bottomToOrigin, 0);
         }
+    }
+
+    // Check for input when the shadow created by the candle can lift the player
+    private void ReceiveLiftInput()
+    {
+        if (shadowInstance == null) return;
+
+        if (Input.GetKeyDown(liftKey))
+        {
+            Rigidbody2D _playerRb = playerInteraction.gameObject.GetComponent<Rigidbody2D>();
+
+            // When the shadow is not lifting player, lift player
+            if (!lifting)
+            {
+                if (!isHeld)
+                {
+                    return;
+                }
+
+                lifting = true;   
+
+                // Stop physics
+                _playerRb.linearVelocityY = 0;
+                _playerRb.simulated = false;
+
+                // set player's position to the current shadow's position
+                Vector3 _offset = new Vector3(0, 0.5f, 0);
+                playerInteraction.gameObject.transform.position = shadowInstance.transform.position + _offset;
+
+                // The candle need to be dropped at this point
+                PickOrDrop(null);
+                playerInteraction.EraseHoldingObject();
+            }
+            else
+            { 
+                // Reactivate physics
+                _playerRb.simulated = true;
+                // Manual setup a jump for player
+                PlayerMovement _playerMovement = playerInteraction.gameObject.GetComponent<PlayerMovement>();
+                _playerRb.linearVelocityY = _playerMovement.jumpForce;
+
+                // change the state
+                lifting = false;
+            }
+            
+
+        }
+
     }
 }

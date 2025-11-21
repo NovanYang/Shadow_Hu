@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheckPoint;
     public float checkRadius = 0.2f;
     public LayerMask groundLayer;
+    public LayerMask interactionLayer;
 
     // Private Variables
     private Rigidbody2D rb;
@@ -25,8 +26,8 @@ public class PlayerMovement : MonoBehaviour
         float moveInput = Input.GetAxisRaw("Horizontal");
         rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
 
-        // Update the ground check
-        isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, checkRadius, groundLayer);
+        // Update Ground Check
+        isGrounded = CheckGround();
 
         // Get Jump Input
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
@@ -35,4 +36,29 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+
+    // Update the ground check, only set isGround to True When object in checked layers and have Groundable
+    // Component
+    private bool CheckGround()
+    {
+
+        Collider2D[] _hits = Physics2D.OverlapCircleAll(
+                groundCheckPoint.position,
+                checkRadius,
+                groundLayer | interactionLayer
+            );
+
+        foreach (var _hit in _hits)
+        { 
+            if (_hit.isTrigger) continue;
+
+            if (_hit.GetComponent<Groundable>() != null)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

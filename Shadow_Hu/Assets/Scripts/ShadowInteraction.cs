@@ -1,14 +1,12 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class PlayerInteraction : MonoBehaviour
+public class ShadowInteraction : MonoBehaviour
 {
-    //Attribute
-    public GameObject holdingObject = null;
+    // References
     public GameObject interactableObject = null;
-    public Transform bottomAnchor;
+    public GameObject holdingObject = null;
     private KeyCode interactKey = KeyCode.E;
-    private KeyCode lightUpKey = KeyCode.Q;
 
     // List of colliding objects
     private List<GameObject> overlappingObjects = new List<GameObject>();
@@ -19,7 +17,7 @@ public class PlayerInteraction : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Interaction"))
         {
             if (!overlappingObjects.Contains(collision.gameObject))
-            { 
+            {
                 overlappingObjects.Add(collision.gameObject);
             }
         }
@@ -29,7 +27,7 @@ public class PlayerInteraction : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (overlappingObjects.Contains(collision.gameObject))
-        { 
+        {
             overlappingObjects.Remove(collision.gameObject);
         }
 
@@ -42,13 +40,7 @@ public class PlayerInteraction : MonoBehaviour
     private void Update()
     {
         UpdateInteractableObject();
-
         ReceiveInteraction();
-
-        ReceiveCandleSwitch();
-
-        ReceiveCandleTune();
-
     }
 
     // Assign the nearest Interactable Object
@@ -82,22 +74,20 @@ public class PlayerInteraction : MonoBehaviour
     {
         switch (target.tag)
         {
-            case "Candle":
+            case "Block":
 
                 if (holdingObject == null)
                 {
-                    holdingObject = target; ;
+                    holdingObject = target;
                 }
                 else if (holdingObject == target)
                 {
                     holdingObject = null;
                 }
-
-                target = target.transform.parent.gameObject;
-                var _candle = target.GetComponent<Candle>();
-                if (_candle != null)
+                var _block = target.GetComponent<Block>();
+                if (_block != null)
                 {
-                    _candle.PickOrDrop(transform);
+                    _block.PickOrDrop(transform);
                 }
                 break;
         }
@@ -118,73 +108,4 @@ public class PlayerInteraction : MonoBehaviour
             }
         }
     }
-
-    // Check for key input for turning the candle
-    private void ReceiveCandleSwitch()
-    {
-        if (Input.GetKeyDown(lightUpKey))
-        {
-            if (interactableObject != null && holdingObject == null)
-            {
-                if (interactableObject.tag == "Candle")
-                {
-                    var _candle = interactableObject.transform.parent;
-                    _candle.GetComponent<Candle>().LitCandle();
-                }
-            }
-            else if (holdingObject != null)
-            {
-                var _candle = holdingObject.transform.parent;
-                _candle.GetComponent<Candle>().LitCandle();
-            }
-        }
-    }
-
-    // Track Signal of tuning the candle and call candle's function
-    private void ReceiveCandleTune()
-    {
-        // check signals only when holding a candle
-        if (holdingObject != null && holdingObject.tag == "Candle")
-        {
-            var _candle = holdingObject.transform.parent.GetComponent<Candle>();
-            // check only if the candle is lit
-            if (_candle.isLit)
-            {
-                float _scroll = Input.GetAxis("Mouse ScrollWheel");
-
-                // return when mouse wheel is not activated
-                if (Input.GetKeyDown(KeyCode.K)) 
-                {
-                    _candle.AdjustShadowScale(-0.5f);
-                }
-                if (Input.GetKeyDown(KeyCode.L))
-                {
-                    _candle.AdjustShadowScale(0.5f);
-                }
-
-                if (_scroll == 0)
-                {
-                    return;
-                }
-                else
-                {
-                    if (_scroll > 0f)
-                    {
-                        _candle.AdjustShadowScale(0.5f);
-
-                    }
-                    else
-                    {
-                        _candle.AdjustShadowScale(-0.5f);
-                    }
-                }
-            }
-        }
-    }
-
-    public void EraseHoldingObject()
-    { 
-        holdingObject = null;
-    }
 }
-
