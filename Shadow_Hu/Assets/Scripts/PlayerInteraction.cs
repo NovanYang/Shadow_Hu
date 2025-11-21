@@ -181,5 +181,10 @@ public class PlayerInteraction : MonoBehaviour
             }
         }
     }
+
+    public void EraseHoldingObject()
+    { 
+        holdingObject = null;
+    }
 }
 

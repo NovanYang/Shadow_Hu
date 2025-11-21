@@ -194,6 +194,7 @@ public class Candle : MonoBehaviour
 
                 // The candle need to be dropped at this point
                 PickOrDrop(null);
+                playerInteraction.EraseHoldingObject();
             }
             else
             { 
