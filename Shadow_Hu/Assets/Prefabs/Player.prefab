@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1249088982153890541}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: -5.43, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -255,6 +255,8 @@ MonoBehaviour:
   animator: {fileID: 6819081105304754247}
   FacingLeft: 0
   AnimationMoving: 0
+  AnimationUp: 0
+  AnimationFall: 0
   SpriteRenderer: {fileID: 8889041541117466123}
 --- !u!61 &326615000050344903
 BoxCollider2D:
