@@ -16,7 +16,7 @@ public class Candle : MonoBehaviour
     private bool lifting = false;
 
     // Shadow Settings
-    public float maxShadowDistance = 20f;
+    public float maxShadowDistance = 30f;
     public float shadowDistanceIntensity = 2f;    
     private GameObject shadowInstance;
     private Vector3 shadowOffset = Vector3.zero;
