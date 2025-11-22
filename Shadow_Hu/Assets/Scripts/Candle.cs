@@ -103,6 +103,7 @@ public class Candle : MonoBehaviour
                 // Get the correct generate position
                 Transform _prefabAnchor = shadowPrefab.transform.Find("BottomAnchor");
                 shadowOffset = -_prefabAnchor.localPosition;
+                
                 // Generate Shadow Prefab Instance
                 shadowInstance = Instantiate(shadowPrefab, bottomAnchor.position + shadowOffset, Quaternion.identity);
             }
@@ -118,6 +119,7 @@ public class Candle : MonoBehaviour
             }
         }
     }
+    
 
     // Update the shadow's Position 
     private void HandleShadowPosition()
@@ -148,8 +150,16 @@ public class Candle : MonoBehaviour
         // Calculate the actual position
         Vector3 _shadowPos = _candleBottom + _direction * _extendedLength;
 
-        _shadowPos.y = _shadowPos.y + shadowOffset.y;
-
+        _shadowPos.y += shadowOffset.y;
+        
+        // If CandlePinhole exist, handle flip
+        if (transform.Find("CandlePinhole"))
+        {
+            var shadowSprite = shadowInstance.transform.Find("ShadowSprite").GetComponent<SpriteRenderer>();
+            _shadowPos.y += shadowSprite.bounds.size.y;
+            shadowSprite.flipY = true;
+        }
+        
         // Update
         shadowInstance.transform.position = _shadowPos;
     }

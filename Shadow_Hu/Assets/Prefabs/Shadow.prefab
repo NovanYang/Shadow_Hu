@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableObject: {fileID: 0}
+  holdingObject: {fileID: 0}
 --- !u!1 &6795741756399399298
 GameObject:
   m_ObjectHideFlags: 0
