@@ -14,6 +14,12 @@ public class Candle : MonoBehaviour
     private PlayerInteraction playerInteraction;
     private KeyCode liftKey = KeyCode.Space;
     private bool lifting = false;
+    public SpriteRenderer ActivateSprite;
+
+    // Candle Animation
+    public float floatAmplitude = 0.1f;
+    public float floatFrequency = 2f;
+    private Vector3 activateSpriteDefaultPos;
 
     // Shadow Settings
     public float maxShadowDistance = 20f;
@@ -36,6 +42,16 @@ public class Candle : MonoBehaviour
         }
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+
+        if (ActivateSprite == null)
+        {
+            Debug.Log("ERROR: NO ACTIVATE SPRITE FOR CANDLE");
+        }
+        else
+        { 
+            activateSpriteDefaultPos = ActivateSprite.transform.localPosition;
+            ActivateSprite.enabled = false;
+        }
     }
 
     private void Update()
@@ -43,6 +59,7 @@ public class Candle : MonoBehaviour
         HandleShadowGeneration();
         HandleShadowPosition();
         ReceiveLiftInput();
+        ActivateCandleFloating();
     }
 
     // Set isHeld state for the candle, make the candle follow the player
@@ -54,12 +71,18 @@ public class Candle : MonoBehaviour
             transform.SetParent(player);
             transform.localPosition = new Vector3(0, 0, 0);
             rb.simulated = false;
+
+            sr.enabled = false;
+            ActivateSprite.enabled = true;
         }
         else
         {
             isHeld = false;
             transform.SetParent(null);
             rb.simulated = true;
+
+            sr.enabled = true;
+            ActivateSprite.enabled = false;
         }
     }
 
@@ -211,5 +234,15 @@ public class Candle : MonoBehaviour
 
         }
 
+    }
+
+    private void ActivateCandleFloating()
+    { 
+        if (ActivateSprite == null || !ActivateSprite.enabled) return;
+
+        float floatOffset = Mathf.Sin(Time.time * floatFrequency) * floatAmplitude;
+
+        ActivateSprite.transform.localPosition = 
+            activateSpriteDefaultPos + new Vector3(0f, floatOffset, 0f);
     }
 }
