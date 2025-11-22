@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Microsoft.Unity.VisualStudio.Editor;
+using UnityEngine;
 
 public class Candle : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class Candle : MonoBehaviour
     public float floatAmplitude = 0.1f;
     public float floatFrequency = 2f;
     private Vector3 activateSpriteDefaultPos;
+    public Sprite LitFrame;
+    public Sprite OffFrame;
 
     // Shadow Settings
     public float maxShadowDistance = 20f;
@@ -92,10 +95,14 @@ public class Candle : MonoBehaviour
         if (!isLit)
         {
             isLit = true;
+            if (ActivateSprite != null) ActivateSprite.sprite = LitFrame;
+            if (sr != null) sr.sprite = LitFrame;
         }
         else
         {
             isLit = false;
+            if (ActivateSprite != null) ActivateSprite.sprite = OffFrame;
+            if (sr != null) sr.sprite = OffFrame;
         }
     }
 
@@ -120,7 +127,7 @@ public class Candle : MonoBehaviour
     {
         if (isLit)
         {
-            sr.color = Color.red;
+            // sr.color = Color.red;
             if (shadowInstance == null && shadowPrefab != null)
             {
                 // Get the correct generate position
@@ -132,7 +139,7 @@ public class Candle : MonoBehaviour
         }
         else
         {
-            sr.color = Color.blue;
+            // sr.color = Color.blue;
             //Clear the shadow Instance when not Lit
             if (shadowInstance != null)
             {
