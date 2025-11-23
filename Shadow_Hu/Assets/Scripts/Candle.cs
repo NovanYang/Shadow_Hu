@@ -126,8 +126,8 @@ public class Candle : MonoBehaviour
 
         if (shadowInstance == null || bottomAnchor == null)
         {
-            Debug.Log("ERROR: Missing Referenec: " +
-                "shadowInstance == null || bottomAnchor == null");
+            // Debug.Log("ERROR: Missing Referenec: " +
+                // "shadowInstance == null || bottomAnchor == null");
             return;
         }
 
