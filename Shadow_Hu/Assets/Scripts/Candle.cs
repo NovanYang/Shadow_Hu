@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Microsoft.Unity.VisualStudio.Editor;
+using UnityEngine;
 
 public class Candle : MonoBehaviour
 {
@@ -14,14 +15,24 @@ public class Candle : MonoBehaviour
     private PlayerInteraction playerInteraction;
     private KeyCode liftKey = KeyCode.Space;
     private bool lifting = false;
+    public SpriteRenderer ActivateSprite;
+
+    // Candle Animation
+    public float floatAmplitude = 0.1f;
+    public float floatFrequency = 2f;
+    private Vector3 activateSpriteDefaultPos;
+    public Sprite LitFrame;
+    public Sprite OffFrame;
 
     // Shadow Settings
-    public float maxShadowDistance = 20f;
+    public float maxShadowDistance = 30f;
     public float shadowDistanceIntensity = 2f;    
     private GameObject shadowInstance;
     private Vector3 shadowOffset = Vector3.zero;
 
-    
+    // Shadow Animation Settings
+    public SpriteRenderer shadowSpriteRenderer;
+    public Animator shadowAnimator;
 
     private void Start()
     {
@@ -36,13 +47,34 @@ public class Candle : MonoBehaviour
         }
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+
+        if (ActivateSprite == null)
+        {
+            Debug.Log("ERROR: NO ACTIVATE SPRITE FOR CANDLE");
+        }
+        else
+        { 
+            activateSpriteDefaultPos = ActivateSprite.transform.localPosition;
+            ActivateSprite.enabled = false;
+        }
     }
 
     private void Update()
     {
         HandleShadowGeneration();
-        HandleShadowPosition();
+
+        if (shadowInstance != null)
+        {
+            HandleShadowPosition();
+        }
+        
         ReceiveLiftInput();
+        ActivateCandleFloating();
+
+        if (shadowSpriteRenderer != null && shadowAnimator != null)
+        {
+            HandleAnimation();
+        }
     }
 
     // Set isHeld state for the candle, make the candle follow the player
@@ -54,12 +86,18 @@ public class Candle : MonoBehaviour
             transform.SetParent(player);
             transform.localPosition = new Vector3(0, 0, 0);
             rb.simulated = false;
+
+            sr.enabled = false;
+            ActivateSprite.enabled = true;
         }
         else
         {
             isHeld = false;
             transform.SetParent(null);
             rb.simulated = true;
+
+            sr.enabled = true;
+            ActivateSprite.enabled = false;
         }
     }
 
@@ -69,10 +107,14 @@ public class Candle : MonoBehaviour
         if (!isLit)
         {
             isLit = true;
+            if (ActivateSprite != null) ActivateSprite.sprite = LitFrame;
+            if (sr != null) sr.sprite = LitFrame;
         }
         else
         {
             isLit = false;
+            if (ActivateSprite != null) ActivateSprite.sprite = OffFrame;
+            if (sr != null) sr.sprite = OffFrame;
         }
     }
 
@@ -97,19 +139,24 @@ public class Candle : MonoBehaviour
     {
         if (isLit)
         {
-            sr.color = Color.red;
+            // sr.color = Color.red;
             if (shadowInstance == null && shadowPrefab != null)
             {
                 // Get the correct generate position
                 Transform _prefabAnchor = shadowPrefab.transform.Find("BottomAnchor");
                 shadowOffset = -_prefabAnchor.localPosition;
+                
                 // Generate Shadow Prefab Instance
                 shadowInstance = Instantiate(shadowPrefab, bottomAnchor.position + shadowOffset, Quaternion.identity);
+
+                // Getting Animation Reference
+                shadowSpriteRenderer = shadowInstance.GetComponentInChildren<SpriteRenderer>();
+                shadowAnimator = shadowInstance.GetComponentInChildren<Animator>();
             }
         }
         else
         {
-            sr.color = Color.blue;
+            // sr.color = Color.blue;
             //Clear the shadow Instance when not Lit
             if (shadowInstance != null)
             {
@@ -118,6 +165,7 @@ public class Candle : MonoBehaviour
             }
         }
     }
+    
 
     // Update the shadow's Position 
     private void HandleShadowPosition()
@@ -148,8 +196,16 @@ public class Candle : MonoBehaviour
         // Calculate the actual position
         Vector3 _shadowPos = _candleBottom + _direction * _extendedLength;
 
-        _shadowPos.y = _shadowPos.y + shadowOffset.y;
-
+        _shadowPos.y += shadowOffset.y;
+        
+        // If CandlePinhole exist, handle flip
+        if (transform.Find("CandlePinhole"))
+        {
+            var shadowSprite = shadowInstance.transform.Find("ShadowSprite").GetComponent<SpriteRenderer>();
+            _shadowPos.y += shadowSprite.bounds.size.y;
+            shadowSprite.flipY = true;
+        }
+        
         // Update
         shadowInstance.transform.position = _shadowPos;
     }
@@ -212,4 +268,63 @@ public class Candle : MonoBehaviour
         }
 
     }
+
+    private void ActivateCandleFloating()
+    { 
+        if (ActivateSprite == null || !ActivateSprite.enabled) return;
+
+        float floatOffset = Mathf.Sin(Time.time * floatFrequency) * floatAmplitude;
+
+        ActivateSprite.transform.localPosition = 
+            activateSpriteDefaultPos + new Vector3(0f, floatOffset, 0f);
+    }
+
+    private void HandleAnimation()
+    {
+        if (playerInteraction == null) return;
+
+        PlayerMovement _playerMovement = playerInteraction.gameObject.GetComponent<PlayerMovement>();
+        Animator _playerAnimator = _playerMovement.animator;
+
+        if (_playerMovement == null) return;
+
+        if (_playerMovement.FacingLeft)
+        {
+            shadowSpriteRenderer.flipX = true;
+        }
+        else
+        {
+            shadowSpriteRenderer.flipX = false;
+        }
+
+        if (_playerMovement.AnimationMoving)
+        {
+            shadowAnimator.SetBool("Moving", true);
+        }
+        else
+        {
+            shadowAnimator.SetBool("Moving", false);
+        }
+
+        if (_playerMovement.AnimationUp)
+        {
+            shadowAnimator.SetBool("Up", true);
+        }
+        else
+        {
+            shadowAnimator.SetBool("Up", false);
+        }
+
+        if (_playerMovement.AnimationFall)
+        {
+            shadowAnimator.SetBool("Fall", true);
+        }
+        else
+        {
+            shadowAnimator.SetBool("Fall", false); 
+        }
+
+
+    }
+
 }
