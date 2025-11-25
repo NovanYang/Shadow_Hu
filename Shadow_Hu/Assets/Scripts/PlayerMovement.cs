@@ -10,14 +10,14 @@ public class PlayerMovement : MonoBehaviour
     public float checkRadius = 0.2f;
     public LayerMask groundLayer;
     public LayerMask interactionLayer;
-    // Animation Variable
+    // Animation Reference
+    public SpriteRenderer SpriteRenderer;
     public Animator animator;
+    // Animation Variable
     public bool FacingLeft = false;
     public bool AnimationMoving = false;
     public bool AnimationUp = false;
     public bool AnimationFall = false;
-    // Animation Reference
-    public SpriteRenderer SpriteRenderer;
 
     // Private Variables
     private Rigidbody2D rb;
