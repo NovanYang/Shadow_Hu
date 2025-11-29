@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class ShadowInteraction : MonoBehaviour
 {
     // References
     public GameObject interactableObject = null;
     public GameObject holdingObject = null;
+    public bool beingLit = false;
     private KeyCode interactKey = KeyCode.E;
 
     // List of colliding objects
@@ -14,6 +16,12 @@ public class ShadowInteraction : MonoBehaviour
     // Adding all interacting objects into list
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.CompareTag("ShadowKiller"))
+        {
+            beingLit = true;
+            HandleShadowKiller();
+        }
+
         if (collision.gameObject.layer == LayerMask.NameToLayer("Interaction"))
         {
             if (!overlappingObjects.Contains(collision.gameObject))
@@ -26,6 +34,11 @@ public class ShadowInteraction : MonoBehaviour
     // Removing not-collideable objects
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (collision.gameObject.CompareTag("ShadowKiller"))
+        {
+            beingLit = false;
+        }
+
         if (overlappingObjects.Contains(collision.gameObject))
         {
             overlappingObjects.Remove(collision.gameObject);
@@ -37,10 +50,31 @@ public class ShadowInteraction : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("ShadowKiller")) HandleShadowKiller();
+    }
+
     private void Update()
     {
         UpdateInteractableObject();
         ReceiveInteraction();
+    }
+
+    // Handle Situation When lit by special light(that can eliminate shadow)
+    private void HandleShadowKiller()
+    {
+        if (holdingObject != null)
+        {
+            switch (holdingObject.tag)
+            {
+                case "Block":
+                    var _block = holdingObject.GetComponent<Block>();
+                    _block.PickOrDrop(transform);
+                    holdingObject = null;
+                    break;
+            }
+        }
     }
 
     // Assign the nearest Interactable Object
@@ -96,6 +130,8 @@ public class ShadowInteraction : MonoBehaviour
     // Check for key input for interaction
     private void ReceiveInteraction()
     {
+        if (beingLit) return;
+
         if (Input.GetKeyDown(interactKey))
         {
             if (interactableObject != null && holdingObject == null)
