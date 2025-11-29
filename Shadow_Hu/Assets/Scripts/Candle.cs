@@ -38,7 +38,7 @@ public class Candle : MonoBehaviour
 
     // Shadow Lift interaction
     public float pressTimeCount = 0f;
-    float pressTimeMax = 15f;
+    float pressTimeMax = 0.1f;
 
     private void Start()
     {
