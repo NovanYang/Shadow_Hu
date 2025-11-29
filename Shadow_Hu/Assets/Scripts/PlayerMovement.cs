@@ -161,4 +161,9 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("PlayerFall", false);
         }
     }
+
+    public bool getGround()
+    { 
+        return isGrounded;
+    }
 }
