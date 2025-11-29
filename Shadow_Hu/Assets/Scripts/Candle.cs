@@ -38,7 +38,7 @@ public class Candle : MonoBehaviour
 
     // Shadow Lift interaction
     public float pressTimeCount = 0f;
-    float pressTimeMax = 15f;
+    float pressTimeMax = 0.1f;
 
     private void Start()
     {
@@ -265,8 +265,9 @@ public class Candle : MonoBehaviour
         if (shadowInstance == null) return;
 
         Rigidbody2D _playerRb = playerInteraction.gameObject.GetComponent<Rigidbody2D>();
+        PlayerMovement _playerMovement = playerInteraction.GetComponent<PlayerMovement>();
 
-        if (Input.GetKey(liftKey) && isHeld && !lifting)
+        if (Input.GetKey(liftKey) && isHeld && !lifting && _playerMovement.getGround())
         {
             pressTimeCount += 0.1f;
 
@@ -294,7 +295,7 @@ public class Candle : MonoBehaviour
             // Reactivate physics
             _playerRb.simulated = true;
             // Manual setup a jump for player
-            PlayerMovement _playerMovement = playerInteraction.gameObject.GetComponent<PlayerMovement>();
+            _playerMovement = playerInteraction.gameObject.GetComponent<PlayerMovement>();
             _playerRb.linearVelocityY = _playerMovement.jumpForce;
 
             // change the state
