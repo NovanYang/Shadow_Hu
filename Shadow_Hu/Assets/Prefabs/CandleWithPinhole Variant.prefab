@@ -39,6 +39,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 172894577336113972, guid: 9f7f9e853acc7ff418a73c6a976d1f0c, type: 3}
+      propertyPath: fineTuneOffset
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 1323690327470400726, guid: 9f7f9e853acc7ff418a73c6a976d1f0c, type: 3}
       propertyPath: m_Name
       value: CandleWithPinhole Variant
