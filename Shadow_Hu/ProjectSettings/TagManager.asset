@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Candle
   - Block
+  - ShadowKiller
   layers:
   - Default
   - TransparentFX
