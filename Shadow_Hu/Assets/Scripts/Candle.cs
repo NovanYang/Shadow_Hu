@@ -226,6 +226,8 @@ public class Candle : MonoBehaviour
     {
         if (shadowInstance == null) return;
 
+        if (shadowInstance.GetComponent<ShadowInteraction>().beingLit) return;
+
         if (Input.GetKeyDown(liftKey))
         {
             Rigidbody2D _playerRb = playerInteraction.gameObject.GetComponent<Rigidbody2D>();
