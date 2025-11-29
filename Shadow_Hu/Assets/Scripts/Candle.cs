@@ -29,6 +29,7 @@ public class Candle : MonoBehaviour
     public float shadowDistanceIntensity = 2f;    
     private GameObject shadowInstance;
     private Vector3 shadowOffset = Vector3.zero;
+    public float fineTuneOffset = 0f;
 
     // Shadow Animation Settings
     public SpriteRenderer shadowSpriteRenderer;
@@ -181,29 +182,61 @@ public class Candle : MonoBehaviour
 
         RecalculateOffset();
 
+
+        Vector3 _shadowPos = Vector3.zero;
         // Get the bottom position of player and candle
         Vector3 _candleBottom = bottomAnchor.position;
         Vector3 _playerBottom = playerInteraction.bottomAnchor.position;
-
+        float _distance = Vector3.Distance(_candleBottom, _playerBottom);
         // Make sure the shadow is on the same side with the player
         Vector3 _direction = (_playerBottom - _candleBottom).normalized;
 
-        float _distance = Vector3.Distance(_candleBottom, _playerBottom);
-
-        // calculate the distance for generation according to Intensity and clamped
-        float _extendedLength = Mathf.Min(_distance * shadowDistanceIntensity, maxShadowDistance);
-
-        // Calculate the actual position
-        Vector3 _shadowPos = _candleBottom + _direction * _extendedLength;
-
-        _shadowPos.y += shadowOffset.y;
-        
         // If CandlePinhole exist, handle flip
         if (transform.Find("CandlePinhole"))
         {
             var shadowSprite = shadowInstance.transform.Find("ShadowSprite").GetComponent<SpriteRenderer>();
-            _shadowPos.y += shadowSprite.bounds.size.y;
+            //_shadowPos.y += shadowSprite.bounds.size.y;
             shadowSprite.flipY = true;
+
+            _direction.y = -_direction.y;
+            // calculate the distance for generation according to Intensity and clamped
+            float _extendedLength = Mathf.Min(_distance * shadowDistanceIntensity, maxShadowDistance);
+
+            _shadowPos = _candleBottom + _direction * _extendedLength;
+            _shadowPos.y -= shadowOffset.y + fineTuneOffset;
+
+            // Calculate the thickness of the ground and apply.
+            RaycastHit2D hit = Physics2D.Raycast(
+                playerInteraction.bottomAnchor.position,
+                Vector2.down,
+                5f,
+                LayerMask.GetMask("Ground")
+            );
+
+            if (hit.collider != null)
+            { 
+                GameObject ground = hit.collider.gameObject;
+
+                BoxCollider2D col = hit.collider as BoxCollider2D;
+
+                if (col != null)
+                {
+                    float thickness = col.size.y * ground.transform.localScale.y;
+
+                    _shadowPos.y -= thickness;
+                }
+            }
+
+        }
+        else 
+        {
+            // calculate the distance for generation according to Intensity and clamped
+            float _extendedLength = Mathf.Min(_distance * shadowDistanceIntensity, maxShadowDistance);
+
+            // Calculate the actual position
+            _shadowPos = _candleBottom + _direction * _extendedLength;
+
+            _shadowPos.y += shadowOffset.y;
         }
         
         // Update
