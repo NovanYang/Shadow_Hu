@@ -13,7 +13,8 @@ public class Candle : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     private PlayerInteraction playerInteraction;
-    private KeyCode liftKey = KeyCode.Space;
+    private KeyCode liftKey = KeyCode.F;
+    private KeyCode jumpKey = KeyCode.Space;
     private bool lifting = false;
     public SpriteRenderer ActivateSprite;
 
@@ -34,6 +35,10 @@ public class Candle : MonoBehaviour
     // Shadow Animation Settings
     public SpriteRenderer shadowSpriteRenderer;
     public Animator shadowAnimator;
+
+    // Shadow Lift interaction
+    public float pressTimeCount = 0f;
+    float pressTimeMax = 15f;
 
     private void Start()
     {
@@ -259,19 +264,16 @@ public class Candle : MonoBehaviour
     {
         if (shadowInstance == null) return;
 
-        if (Input.GetKeyDown(liftKey))
+        Rigidbody2D _playerRb = playerInteraction.gameObject.GetComponent<Rigidbody2D>();
+
+        if (Input.GetKey(liftKey) && isHeld && !lifting)
         {
-            Rigidbody2D _playerRb = playerInteraction.gameObject.GetComponent<Rigidbody2D>();
+            pressTimeCount += 0.1f;
 
-            // When the shadow is not lifting player, lift player
-            if (!lifting)
+            if (pressTimeCount > pressTimeMax)
             {
-                if (!isHeld)
-                {
-                    return;
-                }
-
-                lifting = true;   
+                lifting = true;
+                pressTimeCount = 0;
 
                 // Stop physics
                 _playerRb.linearVelocityY = 0;
@@ -285,19 +287,18 @@ public class Candle : MonoBehaviour
                 PickOrDrop(null);
                 playerInteraction.EraseHoldingObject();
             }
-            else
-            { 
-                // Reactivate physics
-                _playerRb.simulated = true;
-                // Manual setup a jump for player
-                PlayerMovement _playerMovement = playerInteraction.gameObject.GetComponent<PlayerMovement>();
-                _playerRb.linearVelocityY = _playerMovement.jumpForce;
+        }
 
-                // change the state
-                lifting = false;
-            }
-            
+        if (Input.GetKeyDown(jumpKey) && lifting)
+        {
+            // Reactivate physics
+            _playerRb.simulated = true;
+            // Manual setup a jump for player
+            PlayerMovement _playerMovement = playerInteraction.gameObject.GetComponent<PlayerMovement>();
+            _playerRb.linearVelocityY = _playerMovement.jumpForce;
 
+            // change the state
+            lifting = false;
         }
 
     }
@@ -356,7 +357,6 @@ public class Candle : MonoBehaviour
         {
             shadowAnimator.SetBool("Fall", false); 
         }
-
 
     }
 
