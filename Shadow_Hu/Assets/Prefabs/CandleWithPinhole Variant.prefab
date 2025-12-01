@@ -51,6 +51,18 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Candle
       objectReference: {fileID: 0}
+    - target: {fileID: 2001717804539948797, guid: 9f7f9e853acc7ff418a73c6a976d1f0c, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 2.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 2001717804539948797, guid: 9f7f9e853acc7ff418a73c6a976d1f0c, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 3.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 2081619415223561317, guid: 9f7f9e853acc7ff418a73c6a976d1f0c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -8198909669898893833, guid: b8cd8a02eeef454439e66d64960ffa67, type: 3}
     - target: {fileID: 4673884861333345929, guid: 9f7f9e853acc7ff418a73c6a976d1f0c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.145
@@ -91,6 +103,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5182050826032567098, guid: 9f7f9e853acc7ff418a73c6a976d1f0c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2741638986060729781, guid: 9a112768330cc8347a1269f365fa3dec, type: 3}
     - target: {fileID: 7099664026674048470, guid: 9f7f9e853acc7ff418a73c6a976d1f0c, type: 3}
       propertyPath: m_Constraints
       value: 4
