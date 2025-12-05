@@ -13,7 +13,10 @@ namespace Switch
 
         protected void OnTriggerEnter2D(Collider2D other)
         {
-            Switch();
+            if (other.CompareTag("Shadow"))
+            {
+                Switch();
+            }
         }
     }
 }
