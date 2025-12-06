@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.U2D.Animation;
 
 namespace Switch
 {
@@ -10,10 +12,20 @@ namespace Switch
         public bool IsActivated { get; protected set; }
         
         public abstract void Switch();
+        
+        protected SpriteResolver spriteResolver;
+
+        protected void Start()
+        {
+            spriteResolver = GetComponent<SpriteResolver>();
+        }
 
         protected void OnTriggerEnter2D(Collider2D other)
         {
-            Switch();
+            if (other.CompareTag("Shadow"))
+            {
+                Switch();
+            }
         }
     }
 }

@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library:
+  - m_Name: State
+    m_Hash: 575864319
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Open
+      m_Hash: 71445658
+      m_Sprite: {fileID: 4856990145134343996, guid: ef5db3d32660ab643a56bd9846fc9c36, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 4856990145134343996, guid: ef5db3d32660ab643a56bd9846fc9c36, type: 3}
+    - m_Name: Closed
+      m_Hash: 57362642
+      m_Sprite: {fileID: -7341407202210888751, guid: 4d84d9066403ad1479958462375bf73f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -7341407202210888751, guid: 4d84d9066403ad1479958462375bf73f, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 2
+  m_PrimaryLibraryGUID: 
+  m_ModificationHash: 639006290997178074
+  m_Version: 1

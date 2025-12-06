@@ -42,14 +42,14 @@ namespace Switch
 
         private void OnSwitchStateChange(bool active)
         {
-            Debug.Log($"Switch state changed to {active}");
+            // Debug.Log($"Switch state changed to {active}");
             if (active)
             {
                 _numOfActiveSwitches += 1;
                 if (_numOfActiveSwitches == requiredNumActive)
                 {
                     onSwitchGroupActiveStateChange?.Invoke(true);
-                    Debug.Log("Switch group activate");
+                    // Debug.Log("Switch group activate");
                 }
             }
             else
@@ -58,16 +58,19 @@ namespace Switch
                 if (_numOfActiveSwitches == requiredNumActive - 1)
                 {
                     onSwitchGroupActiveStateChange?.Invoke(false);
-                    Debug.Log("Switch group deactivate");
+                    // Debug.Log("Switch group deactivate");
                 }
             }
         }
 
         private void OnDestroy()
         {
-            foreach (var s in _switches)
+            if (_switches != null)
             {
-                s.onActivateStateChange.RemoveListener(OnSwitchStateChange);
+                foreach (var s in _switches)
+                {
+                    s.onActivateStateChange.RemoveListener(OnSwitchStateChange);
+                }
             }
         }
     }
