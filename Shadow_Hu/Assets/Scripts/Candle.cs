@@ -168,9 +168,24 @@ public class Candle : MonoBehaviour
             //Clear the shadow Instance when not Lit
             if (shadowInstance != null)
             {
+                ShadowInteraction _shadowInteraction = shadowInstance.GetComponentInChildren<ShadowInteraction>();
+                if (_shadowInteraction.holdingObject != null)
+                {
+                    switch (_shadowInteraction.holdingObject.tag)
+                    {
+                        case "Block":
+                            var _block = _shadowInteraction.holdingObject.GetComponent<Block>();
+                            _block.PickOrDrop(transform);
+                            _shadowInteraction.holdingObject = null;
+                            break;
+                    }
+                }
+
                 Destroy(shadowInstance);
                 shadowInstance = null;
             }
+
+            
         }
     }
     
