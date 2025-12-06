@@ -62,7 +62,7 @@ public class PlayerInteraction : MonoBehaviour
             foreach (GameObject collidedObject in overlappingObjects)
             {
                 float distance = Vector2.Distance(transform.position, collidedObject.transform.position);
-                if (distance < _minDistance)
+                if (distance < _minDistance && !collidedObject.CompareTag("Block"))
                 {
                     _minDistance = distance;
                     _nearest = collidedObject;

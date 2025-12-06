@@ -9,6 +9,7 @@ public class Block : MonoBehaviour
     private Rigidbody2D rb;
     private Collider2D blockCol;
     private Collider2D playerCol;
+    private bool candleCollide = false;
 
     private void Start()
     {
@@ -57,7 +58,34 @@ public class Block : MonoBehaviour
             }
             else
             {
-                Physics2D.IgnoreCollision(blockCol, playerCol, false);
+                if (!candleCollide)
+                {
+                    Physics2D.IgnoreCollision(blockCol, playerCol, false);
+                }
+            }
+        }
+
+        if (collision.CompareTag("Candle"))
+        { 
+            if (rb.linearVelocityY < -0.01f)
+            {
+                Collider2D _candleCollider = collision.gameObject.GetComponent<Collider2D>();
+                Physics2D.IgnoreCollision(blockCol, _candleCollider, true);
+                Physics2D.IgnoreCollision(blockCol, playerCol, true);
+                candleCollide = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Candle") && rb.linearVelocityY >= -0.01f)
+        {
+            Collider2D _candleCollider = collision.gameObject.GetComponent<Collider2D>();
+            Physics2D.IgnoreCollision(blockCol, _candleCollider, false);
+            if (candleCollide)
+            {
+                candleCollide = false;
             }
         }
     }
