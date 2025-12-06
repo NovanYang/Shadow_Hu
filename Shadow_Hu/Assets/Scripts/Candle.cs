@@ -347,33 +347,44 @@ public class Candle : MonoBehaviour
             shadowSpriteRenderer.flipX = false;
         }
 
-        if (_playerMovement.AnimationMoving)
+        if (!lifting)
         {
-            shadowAnimator.SetBool("Moving", true);
+            shadowAnimator.SetBool("Hold", false);
+
+            if (_playerMovement.AnimationMoving)
+            {
+                shadowAnimator.SetBool("Moving", true);
+            }
+            else
+            {
+                shadowAnimator.SetBool("Moving", false);
+            }
+
+            if (_playerMovement.AnimationUp)
+            {
+                shadowAnimator.SetBool("Up", true);
+            }
+            else
+            {
+                shadowAnimator.SetBool("Up", false);
+            }
+
+            if (_playerMovement.AnimationFall)
+            {
+                shadowAnimator.SetBool("Fall", true);
+            }
+            else
+            {
+                shadowAnimator.SetBool("Fall", false);
+            }
         }
         else
         {
-            shadowAnimator.SetBool("Moving", false);
+            if (!shadowAnimator.GetBool("Hold"))
+            {
+                shadowAnimator.SetBool("Hold", true);
+            }
         }
-
-        if (_playerMovement.AnimationUp)
-        {
-            shadowAnimator.SetBool("Up", true);
-        }
-        else
-        {
-            shadowAnimator.SetBool("Up", false);
-        }
-
-        if (_playerMovement.AnimationFall)
-        {
-            shadowAnimator.SetBool("Fall", true);
-        }
-        else
-        {
-            shadowAnimator.SetBool("Fall", false); 
-        }
-
     }
 
 }
