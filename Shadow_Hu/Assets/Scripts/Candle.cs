@@ -39,6 +39,8 @@ public class Candle : MonoBehaviour
     // Shadow Lift interaction
     public float pressTimeCount = 0f;
     float pressTimeMax = 0.1f;
+    public float ADpressTimeCount = 0f;
+    float ADpressTimeMax = 4f;
 
     private void Start()
     {
@@ -300,6 +302,19 @@ public class Candle : MonoBehaviour
 
             // change the state
             lifting = false;
+        }
+        else if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) && lifting)
+        {
+            ADpressTimeCount += 0.1f;
+
+            if (ADpressTimeCount > ADpressTimeMax)
+            {
+                ADpressTimeCount = 0;
+                // Reactivate physic
+                _playerRb.simulated = true;
+                // Reset State
+                lifting = false;
+            }
         }
 
     }
