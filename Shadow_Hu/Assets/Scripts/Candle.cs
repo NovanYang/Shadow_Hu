@@ -269,27 +269,24 @@ public class Candle : MonoBehaviour
         Rigidbody2D _playerRb = playerInteraction.gameObject.GetComponent<Rigidbody2D>();
         PlayerMovement _playerMovement = playerInteraction.GetComponent<PlayerMovement>();
 
-        if (Input.GetKey(liftKey) && isHeld && !lifting && _playerMovement.getGround())
+        if ((Input.GetMouseButtonDown(0) ||Input.GetKey(liftKey)) && isHeld && !lifting && _playerMovement.getGround())
         {
             pressTimeCount += 0.1f;
 
-            if (pressTimeCount > pressTimeMax)
-            {
-                lifting = true;
-                pressTimeCount = 0;
+            lifting = true;
+            pressTimeCount = 0;
 
-                // Stop physics
-                _playerRb.linearVelocityY = 0;
-                _playerRb.simulated = false;
+            // Stop physics
+            _playerRb.linearVelocityY = 0;
+            _playerRb.simulated = false;
 
-                // set player's position to the current shadow's position
-                Vector3 _offset = new Vector3(0, 0.5f, 0);
-                playerInteraction.gameObject.transform.position = shadowInstance.transform.position + _offset;
+            // set player's position to the current shadow's position
+            Vector3 _offset = new Vector3(0, 0.5f, 0);
+            playerInteraction.gameObject.transform.position = shadowInstance.transform.position + _offset;
 
-                // The candle need to be dropped at this point
-                PickOrDrop(null);
-                playerInteraction.EraseHoldingObject();
-            }
+            // The candle need to be dropped at this point
+            PickOrDrop(null);
+            playerInteraction.EraseHoldingObject();
         }
 
         if (Input.GetKeyDown(jumpKey) && lifting)
