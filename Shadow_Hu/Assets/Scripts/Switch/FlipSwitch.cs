@@ -10,6 +10,7 @@ namespace Switch
             {
                 IsActivated = true;
                 onActivateStateChange.Invoke(true);
+                spriteResolver.SetCategoryAndLabel("State", "On");
             }
         }
     }

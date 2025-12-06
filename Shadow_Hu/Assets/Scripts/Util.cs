@@ -1,4 +1,6 @@
-﻿using UnityEngine.SceneManagement;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Util
 {
@@ -6,16 +8,15 @@ public class Util
     {
         private static SHSceneManager _instance;
         private static readonly object _lock = new object();
-
-        private int _currentSceneIndex = 0;
         
-        public const string SceneTutorial = "TutorialLevel_Test";
-        public const string SceneLevel1 = "Level1";
-        public const string SceneLevel2 = "Level2";
-        public const string SceneLevel3 = "Level3";
-        public const string SceneLevel4 = "Level4";
-        
-        private static readonly string[] _sceneOrders = {SceneTutorial, SceneLevel1, SceneLevel2, SceneLevel3, SceneLevel4};
+        private static readonly List<string> _sceneOrders = new List<string>()
+        {
+            "TutoriaLevel_Test", 
+            "Level1",
+            "Level2",
+            "Level3",
+            "Level4"
+        };
         
         public static SHSceneManager Instance
         {
@@ -34,10 +35,12 @@ public class Util
         
         public void SwitchNextScene()
         {
-            if (_currentSceneIndex < _sceneOrders.Length - 1)
+            var curSceneName = SceneManager.GetActiveScene().name;
+            var index = _sceneOrders.FindIndex((val) => val == curSceneName);
+            Debug.Log($"find current scene index {curSceneName}, index {index}");
+            if (index != -1 && index < _sceneOrders.Count - 1)
             {
-                _currentSceneIndex++;
-                FadeSceneTransition.LoadScene(_sceneOrders[_currentSceneIndex]);    
+                FadeSceneTransition.LoadScene(_sceneOrders[index + 1]);    
             }
         } 
         

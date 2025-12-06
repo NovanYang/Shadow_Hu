@@ -15,10 +15,15 @@ public class Door : MonoBehaviour
         }
         private set
         {
+            Debug.Log($"Set Is DoorOpen to {value}");
             _isDoorOpen = value;
-            if (_isDoorOpen)
+            if (value)
             {
                 _spriteResolver.SetCategoryAndLabel("State", "Open");
+                if (_isUserInDoor)
+                {
+                    Util.SHSceneManager.Instance.SwitchNextScene();
+                }
             }
             else
             {
@@ -26,7 +31,21 @@ public class Door : MonoBehaviour
             }
         }
     }
-    
+
+    private bool _isUserInDoor;
+
+    private bool IsUserInDoor {
+        get => _isUserInDoor;
+        set
+        {
+            if (_isDoorOpen && value)
+            {
+                Util.SHSceneManager.Instance.SwitchNextScene();
+            }
+            _isDoorOpen = value;
+        }
+    }
+
     public SwitchGroup connectedSwitchGroup;
 
     private void Awake()
@@ -45,16 +64,23 @@ public class Door : MonoBehaviour
 
     private void OnSwitchGroupStateChange(bool isActive)
     {
-        IsDoorOpen = true;
+        IsDoorOpen = isActive;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && IsDoorOpen)
+        if (other.CompareTag("Player"))
         {
-            Debug.Log("Switch to next scene");
-            Util.SHSceneManager.Instance.SwitchNextScene();
-            IsDoorOpen = false; // set to false to prevent double triggering the event
+            
+            IsUserInDoor = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            IsUserInDoor = false;
         }
     }
 }

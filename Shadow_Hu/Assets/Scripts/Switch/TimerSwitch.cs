@@ -21,6 +21,7 @@ namespace Switch
             if (!IsActivated)
             {
                 IsActivated = true;
+                spriteResolver.SetCategoryAndLabel("State", "On");
                 onActivateStateChange.Invoke(true);
             }
             
@@ -28,6 +29,7 @@ namespace Switch
             {
                 IsActivated = false;
                 onActivateStateChange.Invoke(false);
+                spriteResolver.SetCategoryAndLabel("State", "Off");
                 // Debug.Log("Switch Deactivated After " + duration);
             });
         }
