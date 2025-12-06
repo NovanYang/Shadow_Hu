@@ -189,7 +189,11 @@ MonoBehaviour:
   OffFrame: {fileID: -9091587060667353086, guid: 926630e063c06854b89431616cc3f6c3, type: 3}
   maxShadowDistance: 20
   shadowDistanceIntensity: 2
-  shadowOffset: {x: 0, y: 0, z: 0}
+  fineTuneOffset: 0
+  shadowSpriteRenderer: {fileID: 0}
+  shadowAnimator: {fileID: 0}
+  pressTimeCount: 0
+  ADpressTimeCount: 0
 --- !u!1 &2191091211895791279
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,7 +348,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 78f82595740f4424d8727daa558c49d8, type: 3}
+  m_Sprite: {fileID: -9091587060667353086, guid: 926630e063c06854b89431616cc3f6c3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

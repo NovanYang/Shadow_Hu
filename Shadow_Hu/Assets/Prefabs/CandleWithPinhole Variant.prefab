@@ -40,6 +40,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 172894577336113972, guid: 9f7f9e853acc7ff418a73c6a976d1f0c, type: 3}
+      propertyPath: LitFrame
+      value: 
+      objectReference: {fileID: -8198909669898893833, guid: ef87f9148c1a44144aaf1a1cd6e18327, type: 3}
+    - target: {fileID: 172894577336113972, guid: 9f7f9e853acc7ff418a73c6a976d1f0c, type: 3}
+      propertyPath: OffFrame
+      value: 
+      objectReference: {fileID: -2741638986060729781, guid: 397b91db1ced40b4b972ed5ad38c35c1, type: 3}
+    - target: {fileID: 172894577336113972, guid: 9f7f9e853acc7ff418a73c6a976d1f0c, type: 3}
       propertyPath: fineTuneOffset
       value: 0.15
       objectReference: {fileID: 0}
@@ -51,6 +59,18 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Candle
       objectReference: {fileID: 0}
+    - target: {fileID: 2001717804539948797, guid: 9f7f9e853acc7ff418a73c6a976d1f0c, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 2.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 2001717804539948797, guid: 9f7f9e853acc7ff418a73c6a976d1f0c, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 3.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 2081619415223561317, guid: 9f7f9e853acc7ff418a73c6a976d1f0c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2741638986060729781, guid: 397b91db1ced40b4b972ed5ad38c35c1, type: 3}
     - target: {fileID: 4673884861333345929, guid: 9f7f9e853acc7ff418a73c6a976d1f0c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.145
@@ -91,6 +111,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5182050826032567098, guid: 9f7f9e853acc7ff418a73c6a976d1f0c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2741638986060729781, guid: 397b91db1ced40b4b972ed5ad38c35c1, type: 3}
     - target: {fileID: 7099664026674048470, guid: 9f7f9e853acc7ff418a73c6a976d1f0c, type: 3}
       propertyPath: m_Constraints
       value: 4
