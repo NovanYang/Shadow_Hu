@@ -40,7 +40,7 @@ public class Candle : MonoBehaviour
     public float pressTimeCount = 0f;
     float pressTimeMax = 0.1f;
     public float ADpressTimeCount = 0f;
-    float ADpressTimeMax = 4f;
+    float ADpressTimeMax = 5f;
 
     private void Start()
     {
