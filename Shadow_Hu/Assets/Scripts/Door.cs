@@ -42,7 +42,7 @@ public class Door : MonoBehaviour
             {
                 Util.SHSceneManager.Instance.SwitchNextScene();
             }
-            _isDoorOpen = value;
+            _isUserInDoor = value;
         }
     }
 

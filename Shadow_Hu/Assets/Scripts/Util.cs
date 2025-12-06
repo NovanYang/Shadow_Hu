@@ -11,7 +11,11 @@ public class Util
         
         private static readonly List<string> _sceneOrders = new List<string>()
         {
-            "TutoriaLevel_Test", 
+            "TutoriaLevel_Test",
+            "TLevel1",
+            "TLevel2",
+            "TLevel3",
+            "TLevel4",
             "Level1",
             "Level2",
             "Level3",

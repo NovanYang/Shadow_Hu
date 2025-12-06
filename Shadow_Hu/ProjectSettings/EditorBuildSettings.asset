@@ -9,6 +9,18 @@ EditorBuildSettings:
     path: Assets/Scenes/Xuan Hu/TutoriaLevel_Test.unity
     guid: 4f251d57582da194ca5a322ce1428ec8
   - enabled: 1
+    path: Assets/Scenes/Xuan Hu/TLevel1.unity
+    guid: 5a76009e0f0ede346b63be8e217bbf98
+  - enabled: 1
+    path: Assets/Scenes/Xuan Hu/TLevel2.unity
+    guid: 8b3df6ce49b348445aa588969593a07f
+  - enabled: 1
+    path: Assets/Scenes/Xuan Hu/TLevel3.unity
+    guid: 63b3a3172a2af634382e13baa6a94959
+  - enabled: 1
+    path: Assets/Scenes/Xuan Hu/TLevel4.unity
+    guid: 1e1b2bbf7b17b2a4fbff4cf677c75468
+  - enabled: 1
     path: Assets/Scenes/Xuan Hu/Level1.unity
     guid: 83870f84b7934cd4493975f8ac8cb47a
   - enabled: 1
