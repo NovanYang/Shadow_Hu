@@ -4,14 +4,13 @@ using UnityEngine.UIElements;
 
 public class SettingPanel : MonoBehaviour
 {
-    [SerializeField] private string menuSceneName = "SampleScene";
     [SerializeField] private KeyCode toggleKey = KeyCode.Escape;
     
     private UIDocument _uiDocument;
     private VisualElement _rootContainer;
     private Button _closeButton;
     private Button _replayButton;
-    private Button _menuButton;
+    private Button _exitButton;
     private Slider _volumeSlider;
     
     private bool _isVisible = false;
@@ -35,7 +34,7 @@ public class SettingPanel : MonoBehaviour
         _rootContainer = root.Q<VisualElement>("RootContainer");
         _closeButton = root.Q<Button>("CloseButton");
         _replayButton = root.Q<Button>("ReplayButton");
-        _menuButton = root.Q<Button>("MenuButton");
+        _exitButton = root.Q<Button>("ExitButton");
         _volumeSlider = root.Q<Slider>("VolumeSlider");
 
         if (_closeButton != null)
@@ -48,10 +47,10 @@ public class SettingPanel : MonoBehaviour
         else
             Debug.LogWarning("ReplayButton not found in UI");
 
-        if (_menuButton != null)
-            _menuButton.RegisterCallback<ClickEvent>(OnMenuClicked);
+        if (_exitButton != null)
+            _exitButton.RegisterCallback<ClickEvent>(OnExitClicked);
         else
-            Debug.LogWarning("MenuButton not found in UI");
+            Debug.LogWarning("ExitButton not found in UI");
 
         if (_volumeSlider != null)
         {
@@ -108,10 +107,13 @@ public class SettingPanel : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    private void OnMenuClicked(ClickEvent evt)
+    private void OnExitClicked(ClickEvent evt)
     {
-        Time.timeScale = 1f; // Resume time before loading menu
-        SceneManager.LoadScene(menuSceneName);
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
 
     private void OnVolumeChanged(ChangeEvent<float> evt)
@@ -124,6 +126,6 @@ public class SettingPanel : MonoBehaviour
         // Cleanup event subscriptions
         if (_closeButton != null) _closeButton.UnregisterCallback<ClickEvent>(OnCloseClicked);
         if (_replayButton != null) _replayButton.UnregisterCallback<ClickEvent>(OnReplayClicked);
-        if (_menuButton != null) _menuButton.UnregisterCallback<ClickEvent>(OnMenuClicked);
+        if (_exitButton != null) _exitButton.UnregisterCallback<ClickEvent>(OnExitClicked);
     }
 }

@@ -11,8 +11,8 @@
             <ui:Button name="ReplayButton" class="action-button">
                 <ui:Label text="Replay" class="button-text" />
             </ui:Button>
-            <ui:Button name="MenuButton" class="action-button">
-                <ui:Label text="Menu" class="button-text" />
+            <ui:Button name="ExitButton" class="action-button">
+                <ui:Label text="Exit" class="button-text" />
             </ui:Button>
             </ui:VisualElement>
         </ui:VisualElement>
