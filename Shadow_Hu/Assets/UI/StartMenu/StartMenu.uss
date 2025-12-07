@@ -1,0 +1,217 @@
+/* Root Container */
+.root-container {
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    -unity-background-scale-mode: scale-and-crop;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Menu Container */
+.menu-container {
+    position: absolute;
+    bottom: 15%;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Menu Buttons - Base Style */
+.menu-button {
+    background-color: transparent;
+    border-width: 0;
+    margin: 8px 0;
+    padding: 0;
+    -unity-background-scale-mode: scale-to-fit;
+    transition-duration: 0.1s;
+}
+
+.menu-button:hover {
+    scale: 1.05;
+}
+
+/* Play Button */
+.play-button {
+    width: 280px;
+    height: 90px;
+    background-image: url("project://database/Assets/Art/UI/ui_play_btn.png");
+}
+
+.play-button:hover {
+    background-image: url("project://database/Assets/Art/UI/ui_play_btn.png");
+}
+
+.play-button:active {
+    background-image: url("project://database/Assets/Art/UI/ui_play_btn_donw.png");
+    scale: 0.98;
+}
+
+/* Setting Button */
+.setting-button {
+    width: 280px;
+    height: 90px;
+    background-image: url("project://database/Assets/Art/UI/ui_setting_btn.png");
+}
+
+.setting-button:hover {
+    background-image: url("project://database/Assets/Art/UI/ui_setting_btn.png");
+}
+
+.setting-button:active {
+    background-image: url("project://database/Assets/Art/UI/ui_setting_btn_down.png");
+    scale: 0.98;
+}
+
+/* Quit Button */
+.quit-button {
+    width: 280px;
+    height: 90px;
+    background-image: url("project://database/Assets/Art/UI/ui_quit_btn.png");
+}
+
+.quit-button:hover {
+    background-image: url("project://database/Assets/Art/UI/ui_quit_btn.png");
+}
+
+.quit-button:active {
+    background-image: url("project://database/Assets/Art/UI/ui_quit_btn_down.png");
+    scale: 0.98;
+}
+
+/* Settings Overlay */
+.settings-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.settings-overlay.hidden {
+    display: none;
+}
+
+/* Settings Panel */
+.settings-panel {
+    width: 420px;
+    height: 280px;
+    background-color: rgb(93, 107, 122);
+    border-radius: 25px;
+    border-width: 4px;
+    border-color: rgb(60, 70, 85);
+    padding: 25px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.panel-title {
+    font-size: 32px;
+    color: rgb(200, 165, 70);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+/* Close Button */
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 35px;
+    height: 35px;
+    background-color: transparent;
+    border-width: 0;
+    padding: 0;
+    margin: 0;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.close-button:hover {
+    opacity: 0.7;
+    scale: 1.1;
+}
+
+/* Volume Section */
+.volume-section {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+}
+
+.sound-icon {
+    width: 45px;
+    height: 45px;
+    -unity-background-scale-mode: scale-to-fit;
+    margin-right: 15px;
+}
+
+.volume-slider {
+    flex-grow: 1;
+    height: 30px;
+}
+
+.volume-slider #unity-tracker {
+    background-color: rgb(70, 80, 95);
+    height: 10px;
+    border-radius: 5px;
+}
+
+.volume-slider #unity-dragger {
+    background-color: rgb(200, 165, 70);
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    margin-top: -7px;
+}
+
+.volume-slider #unity-dragger:hover {
+    background-color: rgb(220, 185, 90);
+}
+
+.volume-slider #unity-fill {
+    background-color: rgb(200, 165, 70);
+    border-radius: 5px;
+}
+
+.volume-label {
+    font-size: 18px;
+    color: rgb(200, 200, 200);
+    -unity-font-style: bold;
+    width: 50px;
+    -unity-text-align: middle-center;
+    margin-left: 10px;
+}
+
+/* Back Button */
+.back-button {
+    width: 120px;
+    height: 45px;
+    background-color: rgb(110, 120, 135);
+    border-radius: 12px;
+    border-width: 3px;
+    border-color: rgb(80, 90, 105);
+    margin-top: 15px;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.back-button:hover {
+    background-color: rgb(125, 135, 150);
+}
+
+.back-button:active {
+    background-color: rgb(95, 105, 120);
+}
+
+.button-text {
+    font-size: 20px;
+    color: rgb(200, 165, 70);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}

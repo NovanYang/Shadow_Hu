@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ui="UnityEngine.UIElements"
+    xmlns:uie="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd"
+    editor-extension-mode="False"
+>
+    <Style src="project://database/Assets/UI/StartMenu/StartMenu.uss?fileID=7433441132597879392&amp;guid=&amp;type=3#StartMenu" />
+    
+    <!-- Main Container with Background Image -->
+    <ui:VisualElement name="RootContainer" class="root-container" style="background-image: url(&quot;project://database/Assets/Art/UI/ui_start_screen.png&quot;);">
+        
+        <!-- Menu Buttons Container -->
+        <ui:VisualElement name="MenuContainer" class="menu-container">
+            <ui:Button name="PlayButton" class="menu-button play-button" />
+            <ui:Button name="SettingButton" class="menu-button setting-button" />
+            <ui:Button name="QuitButton" class="menu-button quit-button" />
+        </ui:VisualElement>
+        
+        <!-- Settings Panel (Hidden by default) -->
+        <ui:VisualElement name="SettingsPanelOverlay" class="settings-overlay hidden">
+            <ui:VisualElement name="SettingsPanel" class="settings-panel">
+                <ui:Button name="CloseSettingsButton" class="close-button" style="background-image: url(&quot;project://database/Assets/Art/UI/ui_close.png&quot;);" />
+                
+                <ui:Label text="Settings" class="panel-title" />
+                
+                <ui:VisualElement name="VolumeSection" class="volume-section">
+                    <ui:VisualElement name="SoundIcon" class="sound-icon" style="background-image: url(&quot;project://database/Assets/Art/UI/ui_sound.png&quot;);" />
+                    <ui:Slider name="VolumeSlider" low-value="0" high-value="100" value="50" class="volume-slider" />
+                    <ui:Label name="VolumeLabel" text="50%" class="volume-label" />
+                </ui:VisualElement>
+                
+                <ui:Button name="BackButton" class="back-button">
+                    <ui:Label text="Back" class="button-text" />
+                </ui:Button>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        
+    </ui:VisualElement>
+</ui:UXML>

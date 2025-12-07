@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Xuan Hu/Start.unity
+    guid: 2a723907465091d469299ef7a6376ff7
+  - enabled: 1
     path: Assets/Scenes/Xuan Hu/TutoriaLevel_Test.unity
     guid: 4f251d57582da194ca5a322ce1428ec8
   - enabled: 1

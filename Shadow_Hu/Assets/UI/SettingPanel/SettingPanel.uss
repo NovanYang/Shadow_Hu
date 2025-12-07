@@ -8,32 +8,34 @@
 }
 
 .setting-panel {
-    width: 400px;
-    height: 300px;
+    width: 500px;
+    height: 380px;
     background-color: rgb(93, 107, 122);
     border-radius: 25px;
     border-width: 4px;
     border-color: rgb(60, 70, 85);
-    padding: 20px;
+    padding: 25px;
     align-items: center;
     justify-content: center;
 }
 
 .close-button {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 35px;
-    height: 35px;
+    top: 18px;
+    right: 18px;
+    width: 45px;
+    height: 45px;
     background-color: transparent;
     border-width: 0;
     padding: 0;
     margin: 0;
+    background-image: url("project://database/Assets/Art/UI/ui_close.png");
     -unity-background-scale-mode: scale-to-fit;
 }
 
 .close-button:hover {
     opacity: 0.8;
+    scale: 1.1;
 }
 
 .volume-section {
@@ -46,58 +48,93 @@
 }
 
 .sound-icon {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
+    background-image: url("project://database/Assets/Art/UI/ui_sound.png");
     -unity-background-scale-mode: scale-to-fit;
-    margin-right: 15px;
+    margin-right: 20px;
 }
 
 .volume-slider {
     flex-grow: 1;
-    height: 30px;
+    height: 35px;
 }
 
 .volume-slider #unity-tracker {
-    background-color: rgb(200, 165, 70);
-    height: 8px;
-    border-radius: 3px;
+    background-color: rgb(70, 80, 95);
+    height: 12px;
+    border-radius: 6px;
 }
 
-.volume-slider #unity-drag-container {
-    padding: 0 10px;
+.volume-slider #unity-dragger {
+    background-color: rgb(200, 165, 70);
+    width: 25px;
+    height: 25px;
+    border-radius: 12px;
+    margin-top: -8px;
+}
+
+.volume-slider #unity-dragger:hover {
+    background-color: rgb(220, 185, 90);
+}
+
+.volume-slider #unity-fill {
+    background-color: rgb(200, 165, 70);
+    border-radius: 5px;
 }
 
 .buttons-section {
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     width: 100%;
     padding: 10px;
 }
 
-.action-button {
-    width: 140px;
-    height: 45px;
-    background-color: rgb(110, 120, 135);
-    border-radius: 12px;
-    border-width: 3px;
-    border-color: rgb(80, 90, 105);
+/* Panel Buttons - Base Style */
+.panel-button {
+    background-color: transparent;
+    border-width: 0;
     margin: 8px 0;
     padding: 0;
-    justify-content: center;
-    align-items: center;
+    -unity-background-scale-mode: scale-to-fit;
+    transition-duration: 0.1s;
 }
 
-.action-button:hover {
-    background-color: rgb(125, 135, 150);
+.panel-button:hover {
+    scale: 1.05;
 }
 
-.action-button:active {
-    background-color: rgb(95, 105, 120);
+/* Replay Button */
+.replay-button {
+    width: 200px;
+    height: 65px;
+    background-image: url("project://database/Assets/Art/UI/ui_replay_btn.png");
 }
 
-.button-text {
+.replay-button:active {
+    background-image: url("project://database/Assets/Art/UI/ui_replay_btn_down.png");
+    scale: 0.98;
+}
+
+/* Menu Button */
+.menu-button {
+    width: 200px;
+    height: 65px;
+    background-image: url("project://database/Assets/Art/UI/ui_menu.png");
+}
+
+.menu-button:active {
+    background-image: url("project://database/Assets/Art/UI/ui_menu_btn_down.png");
+    scale: 0.98;
+}
+
+/* Volume Label */
+.volume-label {
     font-size: 22px;
-    color: rgb(200, 165, 70);
+    color: rgb(200, 200, 200);
     -unity-font-style: bold;
+    width: 60px;
     -unity-text-align: middle-center;
+    margin-left: 15px;
 }

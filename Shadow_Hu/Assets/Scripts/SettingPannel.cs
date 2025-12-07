@@ -1,17 +1,18 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class SettingPanel : MonoBehaviour
 {
     [SerializeField] private KeyCode toggleKey = KeyCode.Escape;
+    [SerializeField] private string startSceneName = "Start";
     
     private UIDocument _uiDocument;
     private VisualElement _rootContainer;
     private Button _closeButton;
     private Button _replayButton;
-    private Button _exitButton;
+    private Button _menuButton;
     private Slider _volumeSlider;
+    private Label _volumeLabel;
     
     private bool _isVisible = false;
 
@@ -34,28 +35,39 @@ public class SettingPanel : MonoBehaviour
         _rootContainer = root.Q<VisualElement>("RootContainer");
         _closeButton = root.Q<Button>("CloseButton");
         _replayButton = root.Q<Button>("ReplayButton");
-        _exitButton = root.Q<Button>("ExitButton");
+        _menuButton = root.Q<Button>("MenuButton");
         _volumeSlider = root.Q<Slider>("VolumeSlider");
+        _volumeLabel = root.Q<Label>("VolumeLabel");
 
         if (_closeButton != null)
+        {
             _closeButton.RegisterCallback<ClickEvent>(OnCloseClicked);
+            Debug.Log("CloseButton registered");
+        }
         else
             Debug.LogWarning("CloseButton not found in UI");
 
         if (_replayButton != null)
+        {
             _replayButton.RegisterCallback<ClickEvent>(OnReplayClicked);
+            Debug.Log("ReplayButton registered");
+        }
         else
             Debug.LogWarning("ReplayButton not found in UI");
 
-        if (_exitButton != null)
-            _exitButton.RegisterCallback<ClickEvent>(OnExitClicked);
+        if (_menuButton != null)
+        {
+            _menuButton.RegisterCallback<ClickEvent>(OnMenuClicked);
+            Debug.Log("MenuButton registered");
+        }
         else
-            Debug.LogWarning("ExitButton not found in UI");
+            Debug.LogWarning("MenuButton not found in UI");
 
         if (_volumeSlider != null)
         {
             _volumeSlider.RegisterValueChangedCallback(OnVolumeChanged);
             _volumeSlider.value = AudioListener.volume * 100f;
+            UpdateVolumeLabel(_volumeSlider.value);
         }
         else
             Debug.LogWarning("VolumeSlider not found in UI");
@@ -98,27 +110,37 @@ public class SettingPanel : MonoBehaviour
 
     private void OnCloseClicked(ClickEvent evt)
     {
+        Debug.Log("Close clicked");
         Hide();
     }
 
     private void OnReplayClicked(ClickEvent evt)
     {
+        Debug.Log("Replay clicked");
         Time.timeScale = 1f; // Resume time before reloading
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Util.SHSceneManager.Instance.ReloadCurrentScene();
     }
 
-    private void OnExitClicked(ClickEvent evt)
+    private void OnMenuClicked(ClickEvent evt)
     {
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
-            Application.Quit();
-        #endif
+        Debug.Log("Menu clicked");
+        Time.timeScale = 1f; // Resume time before switching scene
+        Util.SHSceneManager.Instance.LoadScene(startSceneName);
     }
 
     private void OnVolumeChanged(ChangeEvent<float> evt)
     {
         AudioListener.volume = evt.newValue / 100f;
+        UpdateVolumeLabel(evt.newValue);
+    }
+
+    private void UpdateVolumeLabel(float volume)
+    {
+        if (_volumeLabel != null)
+        {
+            int percentage = Mathf.RoundToInt(volume);
+            _volumeLabel.text = percentage + "%";
+        }
     }
 
     private void OnDestroy()
@@ -126,6 +148,6 @@ public class SettingPanel : MonoBehaviour
         // Cleanup event subscriptions
         if (_closeButton != null) _closeButton.UnregisterCallback<ClickEvent>(OnCloseClicked);
         if (_replayButton != null) _replayButton.UnregisterCallback<ClickEvent>(OnReplayClicked);
-        if (_exitButton != null) _exitButton.UnregisterCallback<ClickEvent>(OnExitClicked);
+        if (_menuButton != null) _menuButton.UnregisterCallback<ClickEvent>(OnMenuClicked);
     }
 }
