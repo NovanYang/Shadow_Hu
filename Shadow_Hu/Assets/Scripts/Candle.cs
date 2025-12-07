@@ -42,6 +42,12 @@ public class Candle : MonoBehaviour
     public float ADpressTimeCount = 0f;
     float ADpressTimeMax = 5f;
 
+    [Header("SFX")] 
+    [SerializeField] private AudioClip turnOnSfx;
+    [SerializeField] private AudioClip turnOffSfx;
+    
+    private AudioSource _audioSource;
+    
     private void Start()
     {
         GameObject _player = GameObject.FindWithTag("Player");
@@ -65,6 +71,8 @@ public class Candle : MonoBehaviour
             activateSpriteDefaultPos = ActivateSprite.transform.localPosition;
             ActivateSprite.enabled = false;
         }
+        
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -117,12 +125,20 @@ public class Candle : MonoBehaviour
             isLit = true;
             if (ActivateSprite != null) ActivateSprite.sprite = LitFrame;
             if (sr != null) sr.sprite = LitFrame;
+            if (_audioSource && turnOnSfx)
+            {
+                _audioSource.PlayOneShot(turnOnSfx);
+            }
         }
         else
         {
             isLit = false;
             if (ActivateSprite != null) ActivateSprite.sprite = OffFrame;
             if (sr != null) sr.sprite = OffFrame;
+            if (_audioSource && turnOffSfx)
+            {
+                _audioSource.PlayOneShot(turnOffSfx);
+            }
         }
     }
 

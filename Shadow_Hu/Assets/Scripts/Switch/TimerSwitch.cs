@@ -22,6 +22,7 @@ namespace Switch
             {
                 IsActivated = true;
                 spriteResolver.SetCategoryAndLabel("State", "On");
+                audioSource.Play();
                 onActivateStateChange.Invoke(true);
             }
             

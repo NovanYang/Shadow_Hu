@@ -9,8 +9,9 @@ namespace Switch
             if (!IsActivated)
             {
                 IsActivated = true;
-                onActivateStateChange.Invoke(true);
                 spriteResolver.SetCategoryAndLabel("State", "On");
+                audioSource.Play();
+                onActivateStateChange.Invoke(true);
             }
         }
     }
