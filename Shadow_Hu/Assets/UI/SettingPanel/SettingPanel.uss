@@ -1,0 +1,108 @@
+/* Root Container - Centers the panel */
+.root-container {
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Main Panel */
+.setting-panel {
+    width: 400px;
+    height: 300px;
+    background-color: rgb(93, 107, 122);
+    border-radius: 25px;
+    border-width: 4px;
+    border-color: rgb(60, 70, 85);
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Close Button */
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 35px;
+    height: 35px;
+    background-color: transparent;
+    border-width: 0;
+    padding: 0;
+    margin: 0;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.close-button:hover {
+    opacity: 0.8;
+}
+
+/* Volume Section */
+.volume-section {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+}
+
+.sound-icon {
+    width: 50px;
+    height: 50px;
+    -unity-background-scale-mode: scale-to-fit;
+    margin-right: 15px;
+}
+
+/* Volume Slider */
+.volume-slider {
+    flex-grow: 1;
+    height: 30px;
+}
+
+.volume-slider #unity-tracker {
+    background-color: rgb(200, 165, 70);
+    height: 8px;
+    border-radius: 3px;
+}
+
+.volume-slider #unity-drag-container {
+    padding: 0 10px;
+}
+
+/* Buttons Section */
+.buttons-section {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+}
+
+.action-button {
+    width: 140px;
+    height: 45px;
+    background-color: rgb(110, 120, 135);
+    border-radius: 12px;
+    border-width: 3px;
+    border-color: rgb(80, 90, 105);
+    margin: 8px 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.action-button:hover {
+    background-color: rgb(125, 135, 150);
+}
+
+.action-button:active {
+    background-color: rgb(95, 105, 120);
+}
+
+.button-text {
+    font-size: 22px;
+    color: rgb(200, 165, 70);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
