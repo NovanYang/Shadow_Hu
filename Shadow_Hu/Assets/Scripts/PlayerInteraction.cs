@@ -43,7 +43,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         UpdateInteractableObject();
 
-        ReceiveInteraction();
+        if (handleInteractionPriority()) ReceiveInteraction();
 
         ReceiveCandleSwitch();
 
@@ -62,7 +62,7 @@ public class PlayerInteraction : MonoBehaviour
             foreach (GameObject collidedObject in overlappingObjects)
             {
                 float distance = Vector2.Distance(transform.position, collidedObject.transform.position);
-                if (distance < _minDistance)
+                if (distance < _minDistance && !collidedObject.CompareTag("Block"))
                 {
                     _minDistance = distance;
                     _nearest = collidedObject;
@@ -185,6 +185,23 @@ public class PlayerInteraction : MonoBehaviour
     public void EraseHoldingObject()
     { 
         holdingObject = null;
+    }
+
+    public bool handleInteractionPriority()
+    {
+        bool _playerCanInteract = true;
+
+        ShadowInteraction[] shadowInteractions = FindObjectsOfType<ShadowInteraction>();
+
+        foreach (ShadowInteraction shadow in shadowInteractions)
+        {
+            if (shadow.GetInteractableCount() > 0)
+            {
+                _playerCanInteract = false;
+            }
+        }
+
+        return _playerCanInteract;
     }
 }
 

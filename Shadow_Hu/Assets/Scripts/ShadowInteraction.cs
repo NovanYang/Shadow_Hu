@@ -11,7 +11,7 @@ public class ShadowInteraction : MonoBehaviour
     private KeyCode interactKey = KeyCode.E;
 
     // List of colliding objects
-    private List<GameObject> overlappingObjects = new List<GameObject>();
+    public List<GameObject> overlappingObjects = new List<GameObject>();
 
     // Adding all interacting objects into list
     private void OnTriggerEnter2D(Collider2D collision)
@@ -24,7 +24,7 @@ public class ShadowInteraction : MonoBehaviour
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Interaction"))
         {
-            if (!overlappingObjects.Contains(collision.gameObject))
+            if (!overlappingObjects.Contains(collision.gameObject) && !collision.gameObject.CompareTag("Candle"))
             {
                 overlappingObjects.Add(collision.gameObject);
             }
@@ -143,5 +143,12 @@ public class ShadowInteraction : MonoBehaviour
                 HandleInteraction(holdingObject);
             }
         }
+    }
+
+    public int GetInteractableCount()
+    {
+        int count = overlappingObjects.Count;
+        if (holdingObject != null) count++;
+        return count;
     }
 }

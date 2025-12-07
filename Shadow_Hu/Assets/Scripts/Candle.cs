@@ -38,7 +38,9 @@ public class Candle : MonoBehaviour
 
     // Shadow Lift interaction
     public float pressTimeCount = 0f;
-    float pressTimeMax = 0.1f;
+    //float pressTimeMax = 0.1f;
+    public float ADpressTimeCount = 0f;
+    float ADpressTimeMax = 5f;
 
     private void Start()
     {
@@ -166,9 +168,24 @@ public class Candle : MonoBehaviour
             //Clear the shadow Instance when not Lit
             if (shadowInstance != null)
             {
+                ShadowInteraction _shadowInteraction = shadowInstance.GetComponentInChildren<ShadowInteraction>();
+                if (_shadowInteraction.holdingObject != null)
+                {
+                    switch (_shadowInteraction.holdingObject.tag)
+                    {
+                        case "Block":
+                            var _block = _shadowInteraction.holdingObject.GetComponent<Block>();
+                            _block.PickOrDrop(transform);
+                            _shadowInteraction.holdingObject = null;
+                            break;
+                    }
+                }
+
                 Destroy(shadowInstance);
                 shadowInstance = null;
             }
+
+            
         }
     }
     
@@ -267,27 +284,24 @@ public class Candle : MonoBehaviour
         Rigidbody2D _playerRb = playerInteraction.gameObject.GetComponent<Rigidbody2D>();
         PlayerMovement _playerMovement = playerInteraction.GetComponent<PlayerMovement>();
 
-        if (Input.GetKey(liftKey) && isHeld && !lifting && _playerMovement.getGround())
+        if ((Input.GetMouseButtonDown(0) ||Input.GetKey(liftKey)) && isHeld && !lifting && _playerMovement.getGround())
         {
             pressTimeCount += 0.1f;
 
-            if (pressTimeCount > pressTimeMax)
-            {
-                lifting = true;
-                pressTimeCount = 0;
+            lifting = true;
+            pressTimeCount = 0;
 
-                // Stop physics
-                _playerRb.linearVelocityY = 0;
-                _playerRb.simulated = false;
+            // Stop physics
+            _playerRb.linearVelocityY = 0;
+            _playerRb.simulated = false;
 
-                // set player's position to the current shadow's position
-                Vector3 _offset = new Vector3(0, 0.5f, 0);
-                playerInteraction.gameObject.transform.position = shadowInstance.transform.position + _offset;
+            // set player's position to the current shadow's position
+            Vector3 _offset = new Vector3(0, 0.5f, 0);
+            playerInteraction.gameObject.transform.position = shadowInstance.transform.position + _offset;
 
-                // The candle need to be dropped at this point
-                PickOrDrop(null);
-                playerInteraction.EraseHoldingObject();
-            }
+            // The candle need to be dropped at this point
+            PickOrDrop(null);
+            playerInteraction.EraseHoldingObject();
         }
 
         if (Input.GetKeyDown(jumpKey) && lifting)
@@ -300,6 +314,19 @@ public class Candle : MonoBehaviour
 
             // change the state
             lifting = false;
+        }
+        else if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) && lifting)
+        {
+            ADpressTimeCount += 0.1f;
+
+            if (ADpressTimeCount > ADpressTimeMax)
+            {
+                ADpressTimeCount = 0;
+                // Reactivate physic
+                _playerRb.simulated = true;
+                // Reset State
+                lifting = false;
+            }
         }
 
     }
@@ -332,33 +359,43 @@ public class Candle : MonoBehaviour
             shadowSpriteRenderer.flipX = false;
         }
 
-        if (_playerMovement.AnimationMoving)
+        if (!lifting)
         {
-            shadowAnimator.SetBool("Moving", true);
+            shadowAnimator.SetBool("Hold", false);
+
+            if (_playerMovement.AnimationMoving)
+            {
+                shadowAnimator.SetBool("Moving", true);
+            }
+            else
+            {
+                shadowAnimator.SetBool("Moving", false);
+            }
+
+            if (_playerMovement.AnimationUp)
+            {
+                shadowAnimator.SetBool("Up", true);
+            }
+            else
+            {
+                shadowAnimator.SetBool("Up", false);
+            }
+
+            if (_playerMovement.AnimationFall)
+            {
+                shadowAnimator.SetBool("Fall", true);
+            }
+            else
+            {
+                shadowAnimator.SetBool("Fall", false);
+            }
         }
         else
         {
-            shadowAnimator.SetBool("Moving", false);
+            if (!shadowAnimator.GetBool("Hold"))
+            {
+                shadowAnimator.SetBool("Hold", true);
+            }
         }
-
-        if (_playerMovement.AnimationUp)
-        {
-            shadowAnimator.SetBool("Up", true);
-        }
-        else
-        {
-            shadowAnimator.SetBool("Up", false);
-        }
-
-        if (_playerMovement.AnimationFall)
-        {
-            shadowAnimator.SetBool("Fall", true);
-        }
-        else
-        {
-            shadowAnimator.SetBool("Fall", false); 
-        }
-
     }
-
 }
