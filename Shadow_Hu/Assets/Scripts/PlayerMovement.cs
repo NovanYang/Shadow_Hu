@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     // Private Variables
     private Rigidbody2D rb;
     private bool isGrounded;
+    
+    private AudioSource _jumpAudio;
 
     void Start()
     {
@@ -30,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("ERROR: MISSING ANIMATOR");
         }
+        _jumpAudio = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -50,6 +54,10 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            if (_jumpAudio && !_jumpAudio.isPlaying)
+            {
+                _jumpAudio.Play();
+            }
         }
 
     }
