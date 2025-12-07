@@ -1,0 +1,20 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/SettingPanel/SettingPanel.uss?fileID=7433441132597879392&amp;guid=82380a6a9b00e0b48962adfc2d38cf06&amp;type=3#SettingPanel" />
+    <ui:VisualElement name="RootContainer" class="root-container">
+        <ui:VisualElement name="SettingPanel" class="setting-panel">
+        <ui:Button name="CloseButton" class="close-button" style="background-image: url(&quot;project://database/Assets/Art/UI/ui_close.png&quot;);" />
+        <ui:VisualElement name="VolumeSection" class="volume-section">
+            <ui:VisualElement name="SoundIcon" class="sound-icon" style="background-image: url(&quot;project://database/Assets/Art/UI/ui_sound.png?fileID=2052280017269352172&amp;guid=17f8a51cb2bc93240b9b61852d011f10&amp;type=3#ui_sound_0&quot;);" />
+            <ui:Slider name="VolumeSlider" low-value="0" high-value="100" value="50" class="volume-slider" />
+        </ui:VisualElement>
+        <ui:VisualElement name="ButtonsSection" class="buttons-section">
+            <ui:Button name="ReplayButton" class="action-button">
+                <ui:Label text="Replay" class="button-text" />
+            </ui:Button>
+            <ui:Button name="MenuButton" class="action-button">
+                <ui:Label text="Menu" class="button-text" />
+            </ui:Button>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
