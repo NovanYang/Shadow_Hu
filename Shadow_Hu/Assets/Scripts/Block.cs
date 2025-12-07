@@ -10,6 +10,12 @@ public class Block : MonoBehaviour
     private Collider2D blockCol;
     private Collider2D playerCol;
     private bool candleCollide = false;
+    private Transform shadowTransform;
+
+    private void Update()
+    {
+        if (isHeld) FollowShadow(shadowTransform);
+    }
 
     private void Start()
     {
@@ -33,17 +39,22 @@ public class Block : MonoBehaviour
 
         if (!isHeld)
         {
+            shadowTransform = Shadow;
             isHeld = true;
-            transform.SetParent(Shadow);
             transform.localPosition = new Vector3(0, 0, 0);
             rb.simulated = false;
         }
         else
         {
             isHeld = false;
-            transform.SetParent(null);
+            shadowTransform = null;
             rb.simulated = true;
         }
+    }
+
+    public void FollowShadow(Transform shadow)
+    {
+        transform.position = shadow.position;
     }
 
     // When the block is about to hit the player when falling, ignore collision
