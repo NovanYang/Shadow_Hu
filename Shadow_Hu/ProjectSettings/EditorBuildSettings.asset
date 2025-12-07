@@ -35,6 +35,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Xuan Hu/Level4.unity
     guid: 24835a016df889746873c7b139578a71
+  - enabled: 1
+    path: Assets/Scenes/Xuan Hu/won.unity
+    guid: ba5291fbbaafbd44aba1494e694bc0f4
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
