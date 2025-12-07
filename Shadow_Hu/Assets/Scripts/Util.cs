@@ -11,6 +11,7 @@ public class Util
         
         private static readonly List<string> _sceneOrders = new List<string>()
         {
+            "Start",
             "TutoriaLevel_Test",
             "TLevel1",
             "TLevel2",
@@ -19,7 +20,8 @@ public class Util
             "Level1",
             "Level2",
             "Level3",
-            "Level4"
+            "Level4",
+            "Won"
         };
         
         public static SHSceneManager Instance
@@ -52,6 +54,16 @@ public class Util
         {
             //TODO: add a ReloadScene method in FadeSceneTransition
             FadeSceneTransition.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        public void LoadScene(string sceneName)
+        {
+            FadeSceneTransition.LoadScene(sceneName);
+        }
+
+        public void LoadScene(int sceneIndex)
+        {
+            FadeSceneTransition.LoadScene(sceneIndex);
         }
     }
 }
