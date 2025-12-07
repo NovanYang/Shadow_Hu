@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ui="UnityEngine.UIElements"
+    xmlns:uie="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd"
+    editor-extension-mode="False"
+>
+    <Style src="project://database/Assets/UI/Credit/Credit.uss?fileID=7433441132597879392&amp;guid=&amp;type=3#Credit" />
+    
+    <!-- Main Container -->
+    <ui:VisualElement name="RootContainer" class="root-container">
+        
+        <!-- Content Container -->
+        <ui:VisualElement name="ContentContainer" class="content-container">
+            
+            <!-- Congrats Title -->
+            <ui:Label name="CongratsTitle" text="CONGRATS" class="congrats-title" />
+            
+            <!-- Credits Section -->
+            <ui:VisualElement name="CreditsSection" class="credits-section">
+                <ui:Label name="CreditsLabel" text="Credits" class="credits-label" />
+                <ui:Label name="TeamNames" text="Novan Yang, Wei Xiang, Siqi Lei,&#10;Xuan Hu, Yanjun Liu" class="team-names" />
+            </ui:VisualElement>
+            
+        </ui:VisualElement>
+        
+        <!-- Exit Button -->
+        <ui:Button name="ExitButton" class="exit-button" />
+        
+    </ui:VisualElement>
+</ui:UXML>

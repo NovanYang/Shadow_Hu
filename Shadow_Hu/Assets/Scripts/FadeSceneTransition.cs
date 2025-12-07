@@ -69,24 +69,27 @@ public class FadeSceneTransition : MonoBehaviour
     
     private IEnumerator Fade(float targetAlpha)
     {
-        float startAlpha = fadeImage.color.a;
-        float elapsed = 0f;
-        
-        while (elapsed < fadeDuration)
+        if (fadeImage)
         {
-            elapsed += Time.deltaTime;
-            float alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / fadeDuration);
-            
-            Color c = fadeImage.color;
-            c.a = alpha;
-            fadeImage.color = c;
-            
-            yield return null;
-        }
+            float startAlpha = fadeImage.color.a;
+            float elapsed = 0f;
         
-        // Ensure final value
-        Color finalColor = fadeImage.color;
-        finalColor.a = targetAlpha;
-        fadeImage.color = finalColor;
+            while (elapsed < fadeDuration)
+            {
+                elapsed += Time.deltaTime;
+                float alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / fadeDuration);
+            
+                Color c = fadeImage.color;
+                c.a = alpha;
+                fadeImage.color = c;
+            
+                yield return null;
+            }
+        
+            // Ensure final value
+            Color finalColor = fadeImage.color;
+            finalColor.a = targetAlpha;
+            fadeImage.color = finalColor;
+        }
     }
 }
